@@ -15,41 +15,28 @@
     <link rel="stylesheet" href="css/responsive.css">
 
     <script src="js/theme.js"></script>
+
+    <!-- Preload the preloader video as early as possible so playback
+         can begin the moment the overlay mounts. -->
+    <link rel="preload" as="video" href="assets/logo.mp4">
 </head>
 <body class="home-page">
 
     <!-- ============================================================
-         PRELOADER — Circle stays, dots emerge inward, trails form atom
+         PRELOADER — Full-screen logo video overlay
          ============================================================ -->
     <div id="preloader" class="preloader-overlay" role="status" aria-label="Loading">
-        <div class="preloader-content">
-
-            <div class="preloader-stage">
-                <svg class="preloader-svg"
-                     viewBox="-110 -110 220 220"
-                     xmlns="http://www.w3.org/2000/svg"
-                     aria-hidden="true">
-
-                    <path class="orbit-trail" id="preloader-trail-0" d="" />
-                    <path class="orbit-trail" id="preloader-trail-1" d="" />
-                    <path class="orbit-trail" id="preloader-trail-2" d="" />
-
-                    <circle id="preloader-base-circle"
-                            class="preloader-base-circle"
-                            cx="0" cy="0" r="42" />
-
-                    <circle class="preloader-dot" id="preloader-dot-0" r="4" cx="0" cy="0" />
-                    <circle class="preloader-dot" id="preloader-dot-1" r="4" cx="0" cy="0" />
-                    <circle class="preloader-dot" id="preloader-dot-2" r="4" cx="0" cy="0" />
-                </svg>
-            </div>
-
-            <div class="preloader-text">
-                <div class="preloader-brand">IEEE RGIT</div>
-                <div class="preloader-tagline">LEARN. EVOLVE.</div>
-            </div>
-
-        </div>
+        <video
+            id="preloader-video"
+            class="preloader-video"
+            src="assets/logo.mp4"
+            autoplay
+            muted
+            playsinline
+            preload="auto"
+            disablepictureinpicture
+            disableremoteplayback
+            aria-hidden="true"></video>
     </div>
 
     <!-- NAVBAR -->
@@ -97,9 +84,6 @@
             <h1 class="hero-title">Shaping the Future of Engineering with <span class="highlight">IEEE-RGIT</span></h1>
             <p class="hero-subtitle">Empowering student innovators through collaborative research, hands-on technical workshops, VLSI design, embedded systems, and cutting-edge engineering projects.</p>
 
-            <!-- ============================================================
-                 CTA BUTTONS — simple color-transition hover
-                 ============================================================ -->
             <div class="hero-cta">
                 <a href="events.html" class="hover-cta" aria-label="Explore Events">
                     <span class="hover-cta-text">
@@ -344,12 +328,26 @@
                     <a href="#" class="social-icon" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
                 </div>
             </div>
-            <div class="footer-col">
-                <h4 class="footer-title">Location</h4>
+            <div class="footer-col footer-col-location">
+                <h4 class="footer-title">LOCATION</h4>
                 <div class="location">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    <span>RGIT, Versova, Andheri West – 400 053</span>
+                    <span>MCT's Rajiv Gandhi Institute<br>of Technology,<br>Versova, Andheri (W),<br>Mumbai 400053</span>
                 </div>
+                <a href="https://www.google.com/maps/search/?api=1&query=MCT%27s+Rajiv+Gandhi+Institute+of+Technology%2C+Versova%2C+Andheri+%28W%29%2C+Mumbai+400053"
+                   class="footer-map-link"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="Open MCT's Rajiv Gandhi Institute of Technology on Google Maps">
+                    <iframe
+                        class="footer-map-iframe"
+                        src="https://maps.google.com/maps?q=MCT%27s+Rajiv+Gandhi+Institute+of+Technology%2C+Versova%2C+Andheri+%28W%29%2C+Mumbai+400053&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Map preview of MCT's Rajiv Gandhi Institute of Technology"
+                        aria-hidden="true"
+                        tabindex="-1"></iframe>
+                </a>
             </div>
         </div>
         <div class="footer-bottom">
