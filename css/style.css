@@ -40,7 +40,7 @@
     --glass-pill-border: rgba(203, 213, 225, 0.85);
     --glass-pill-highlight: rgba(255, 255, 255, 0.95);
 
-    /* Hover CTA — light mode: white surface, transitions to IEEE blue on hover */
+    /* Hover CTA — light mode */
     --hover-cta-bg: #ffffff;
     --hover-cta-bg-hover: #00629B;
     --hover-cta-text: #0f172a;
@@ -86,7 +86,7 @@ html.dark {
     --glass-pill-border: rgba(56, 189, 248, 0.35);
     --glass-pill-highlight: rgba(255, 255, 255, 0.12);
 
-    /* Hover CTA — dark mode: black surface, transitions to IEEE blue on hover */
+    /* Hover CTA — dark mode */
     --hover-cta-bg: #000000;
     --hover-cta-bg-hover: #00629B;
     --hover-cta-text: #ffffff;
@@ -1034,7 +1034,7 @@ html.dark .footer-highlight {
     margin-top: 1px;
 }
 
-/* ---------- Footer Location block — map preview ---------- */
+/* ---------- Footer Location block — Google Maps preview ---------- */
 .footer-map-link {
     display: block;
     margin-top: 14px;
