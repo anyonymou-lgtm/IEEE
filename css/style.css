@@ -1034,6 +1034,53 @@ html.dark .footer-highlight {
     margin-top: 1px;
 }
 
+/* ---------- Footer Location block — map preview ---------- */
+.footer-map-link {
+    display: block;
+    margin-top: 14px;
+    width: 100%;
+    max-width: 240px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--glass-nav-border);
+    background: var(--surface);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+    position: relative;
+    line-height: 0;
+}
+
+.footer-map-link:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+}
+
+.footer-map-link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.footer-map-iframe {
+    display: block;
+    width: 100%;
+    height: 130px;
+    border: 0;
+    background: var(--surface-hover);
+    /* Let clicks pass through to the parent <a> so that
+       tapping anywhere on the map opens Google Maps. */
+    pointer-events: none;
+}
+
+/* On small screens, center the map link under the address */
+@media (max-width: 768px) {
+    .footer-map-link {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 .footer-bottom {
     border-top: 1px solid var(--glass-nav-border);
     padding: 1.5rem 0;
@@ -1916,21 +1963,6 @@ html.dark .home-page .marquee-wrapper {
 /* ==================================================
    22. HOMEPAGE + ABOUT — HIDE DECORATIVE
        SECTION-HEADING ACCENT LINES
-   ---------------------------------------------------
-   Removes the small cyan accent line above:
-     • "About IEEE-RGIT"           (homepage #about)
-     • "WHO WE ARE"                (about.html #about-core)
-   And the small cyan accent line below:
-     • "TECHNOLOGIES WE WORK WITH" (homepage #technologies)
-
-   `visibility: hidden` is used instead of `display: none`
-   so the element still occupies its original space. This
-   keeps the heading text position, spacing, alignment and
-   responsive behavior completely unchanged.
-
-   Scoped precisely to the three target sections so that
-   any other `.section-line` elsewhere on the site is
-   completely unaffected.
 ================================================== */
 .home-page #about .section-line,
 .about-page #about-core .section-line,
