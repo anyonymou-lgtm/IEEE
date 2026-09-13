@@ -526,11 +526,6 @@ html.dark .btn-primary:hover {
 
 /* ==================================================
    6b. HOVER CTA — SIMPLE COLOR-TRANSITION BUTTONS
-   ---------------------------------------------------
-   Used by the Hero "Explore Events" / "Learn More"
-   buttons AND the Signal Match "Play Now" button.
-   Only the surface color transitions on hover; text
-   and arrow remain static.
 ================================================== */
 
 .hover-cta {
@@ -1916,4 +1911,29 @@ html.dark .home-page .marquee-wrapper {
 .team-page .team-header {
     background: var(--bg-main);
     border-bottom: none;
+}
+
+/* ==================================================
+   22. HOMEPAGE + ABOUT — HIDE DECORATIVE
+       SECTION-HEADING ACCENT LINES
+   ---------------------------------------------------
+   Removes the small cyan accent line above:
+     • "About IEEE-RGIT"           (homepage #about)
+     • "WHO WE ARE"                (about.html #about-core)
+   And the small cyan accent line below:
+     • "TECHNOLOGIES WE WORK WITH" (homepage #technologies)
+
+   `visibility: hidden` is used instead of `display: none`
+   so the element still occupies its original space. This
+   keeps the heading text position, spacing, alignment and
+   responsive behavior completely unchanged.
+
+   Scoped precisely to the three target sections so that
+   any other `.section-line` elsewhere on the site is
+   completely unaffected.
+================================================== */
+.home-page #about .section-line,
+.about-page #about-core .section-line,
+.home-page #technologies .section-line {
+    visibility: hidden;
 }
