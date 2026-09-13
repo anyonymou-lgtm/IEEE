@@ -1,64 +1,147 @@
 /* ==================================================
-   PRELOADER — Full-screen logo video overlay
-   ---------------------------------------------------
-   Replaces the previous animated SVG/chip preloader with
-   a single video overlay. The overlay:
-     • Covers the entire viewport at a high z-index
-     • Uses a solid deep navy background behind the video
-     • Centers the video without distortion
-     • Fades out smoothly when the video ends
-     • Disappears completely (display: none) so it never
-       blocks clicks or scrolling after playback
-   All animation logic lives in js/animation.js.
-================================================== */
+   PRELOADER — Circle stays, particles emerge inward,
+   trails draw the IEEE-RGIT atom. All selectors scoped.
+   ================================================== */
 
+/* ---------- Overlay ---------- */
 .preloader-overlay {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background-color: #0b1120; /* deep dark navy */
+    background: #0b1120;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     opacity: 1;
-    visibility: visible;
-    transition: opacity 0.6s ease, visibility 0.6s ease;
-    will-change: opacity, visibility;
+    overflow: hidden;
+    transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity;
 }
 
 .preloader-overlay.fade-out {
     opacity: 0;
-    visibility: hidden;
     pointer-events: none;
 }
 
-/* Hidden state applied after the fade completes so the
-   overlay cannot intercept clicks or scrolling. */
-.preloader-overlay.is-hidden {
-    display: none !important;
+/* ---------- Content layout ---------- */
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    padding: 20px;
 }
 
-/* ---------- Video ---------- */
-.preloader-video {
+/* ---------- Stage ---------- */
+.preloader-stage {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    flex-shrink: 0;
+}
+
+.preloader-svg {
     display: block;
     width: 100%;
     height: 100%;
-    max-width: 100vw;
-    max-height: 100vh;
-    max-height: 100dvh;
-    /* Preserve aspect ratio while filling the available area
-       without stretching or distorting. */
-    object-fit: contain;
-    background: transparent;
-    /* Prevent iOS/Android UI overlays on tap */
-    -webkit-tap-highlight-color: transparent;
-    pointer-events: none;
+    overflow: visible;
+    filter:
+        drop-shadow(0 0 3px rgba(255, 255, 255, 0.35))
+        drop-shadow(0 0 10px rgba(56, 189, 248, 0.18));
 }
 
-/* ---------- Reduced motion ---------- */
+/* ---------- Base circle (persistent visual anchor) ---------- */
+.preloader-base-circle {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.65);
+    stroke-width: 1.8;
+    opacity: 0;                  /* JS drives fade-in */
+    transform-origin: 0 0;
+    transform-box: view-box;
+}
+
+/* ---------- Orbital trails ---------- */
+.orbit-trail {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.9);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ---------- Particles ---------- */
+.preloader-dot {
+    fill: #ffffff;
+    opacity: 0;                  /* JS drives fade-in */
+    transition: opacity 0.3s ease;
+}
+
+/* ---------- Text ---------- */
+.preloader-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.preloader-brand {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    color: #ffffff;
+    padding-left: 0.35em;
+    line-height: 1.2;
+    text-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.preloader-brand.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.preloader-tagline {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.45em;
+    color: rgba(255, 255, 255, 0.6);
+    padding-left: 0.45em;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.preloader-tagline.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+@media (max-width: 480px) {
+    .preloader-content { transform: scale(0.85); }
+    .preloader-brand { font-size: 1.2rem; }
+    .preloader-tagline { font-size: 0.6rem; }
+}
+
+@media (max-height: 560px) {
+    .preloader-content { transform: scale(0.72); }
+}
+
+/* ==================================================
+   REDUCED MOTION
+================================================== */
 @media (prefers-reduced-motion: reduce) {
-    .preloader-overlay {
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
+    .preloader-overlay { transition: opacity 0.3s ease; }
+    .preloader-brand,
+    .preloader-tagline { transition: opacity 0.3s ease, transform 0.3s ease; }
+    .preloader-dot { transition: opacity 0.2s ease; }
 }
