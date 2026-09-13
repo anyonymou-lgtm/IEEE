@@ -16,14 +16,16 @@
 
     <script src="js/theme.js"></script>
 
-    <!-- Preload the preloader video as early as possible so playback
-         can begin the moment the overlay mounts. -->
+    <!-- Preload the preloader video so playback can start the
+         moment the overlay mounts. -->
     <link rel="preload" as="video" href="assets/logo.mp4">
 </head>
 <body class="home-page">
 
     <!-- ============================================================
          PRELOADER — Full-screen logo video overlay
+         Plays once, muted, autoplay, playsinline. On `ended`,
+         fades out and reveals the already-rendered site.
          ============================================================ -->
     <div id="preloader" class="preloader-overlay" role="status" aria-label="Loading">
         <video
