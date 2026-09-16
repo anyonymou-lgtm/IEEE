@@ -1,20 +1,38 @@
 /* ==================================================
-   PRELOADER — Video version
-   Background: #0B1021 (matches the video's solid background)
+   PRELOADER — Seamless full-screen #0B1021 video
+   ---------------------------------------------------
+   • Overlay fills the entire viewport (100vw / 100dvh).
+   • Video is an absolutely positioned background layer
+     covering the whole overlay.
+   • No borders, shadows, outlines, or pseudo-elements.
+   • Background colour matches the video's baked-in
+     background exactly (#0B1021), so letterboxing
+     (if any) is invisible — no rectangular seam.
+   • Normal page background is untouched.
    ================================================== */
 
-/* ---------- Overlay ---------- */
+/* ---------- Overlay (full-screen solid #0B1021) ---------- */
 .preloader-overlay {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;    /* fallback */
+    height: 100dvh;   /* modern mobile-safe viewport */
     z-index: 9999;
-    background: #0B1021;   /* changed from #0b1120 to match video background */
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: #0B1021;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 1;
-    overflow: hidden;
-    transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: opacity;
 }
 
@@ -23,25 +41,37 @@
     pointer-events: none;
 }
 
-/* ---------- Content layout ---------- */
+/* ---------- Video (fills the overlay, no seam) ---------- */
+.preloader-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+    background-color: #0B1021;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ---------- Content (text overlays on top of the video) ---------- */
 .preloader-content {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 26px;
     padding: 20px;
-}
-
-/* ---------- Video ---------- */
-.preloader-video {
-    max-width: 80vw;
-    max-height: 60vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 /* ---------- Text ---------- */
@@ -91,16 +121,29 @@
 }
 
 /* ==================================================
+   SCROLL LOCK WHILE PRELOADER IS ACTIVE
+   ---------------------------------------------------
+   Prevents the underlying page from showing a
+   scrollbar / gutter behind the fixed preloader,
+   which is a common source of a thin visible seam.
+   Removed automatically once the preloader is done.
+   ================================================== */
+html.preloader-active,
+html.preloader-active body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==================================================
    RESPONSIVE
 ================================================== */
 @media (max-width: 480px) {
-    .preloader-content { transform: scale(0.85); }
+    .preloader-content { transform: scale(0.9); }
     .preloader-brand { font-size: 1.2rem; }
     .preloader-tagline { font-size: 0.6rem; }
-    .preloader-video {
-        max-width: 90vw;
-        max-height: 50vh;
-    }
 }
 
 @media (max-height: 560px) {
