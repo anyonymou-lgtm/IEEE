@@ -1,6 +1,6 @@
 /* ==================================================
-   PRELOADER — Circle stays, particles emerge inward,
-   trails draw the IEEE-RGIT atom. All selectors scoped.
+   PRELOADER — Video version
+   Background: #0B1021 (matches the video's solid background)
    ================================================== */
 
 /* ---------- Overlay ---------- */
@@ -8,7 +8,7 @@
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: #0b1120;
+    background: #0B1021;   /* changed from #0b1120 to match video background */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,48 +33,15 @@
     padding: 20px;
 }
 
-/* ---------- Stage ---------- */
-.preloader-stage {
-    position: relative;
-    width: 220px;
-    height: 220px;
-    flex-shrink: 0;
-}
-
-.preloader-svg {
+/* ---------- Video ---------- */
+.preloader-video {
+    max-width: 80vw;
+    max-height: 60vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     display: block;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    filter:
-        drop-shadow(0 0 3px rgba(255, 255, 255, 0.35))
-        drop-shadow(0 0 10px rgba(56, 189, 248, 0.18));
-}
-
-/* ---------- Base circle (persistent visual anchor) ---------- */
-.preloader-base-circle {
-    fill: none;
-    stroke: rgba(255, 255, 255, 0.65);
-    stroke-width: 1.8;
-    opacity: 0;                  /* JS drives fade-in */
-    transform-origin: 0 0;
-    transform-box: view-box;
-}
-
-/* ---------- Orbital trails ---------- */
-.orbit-trail {
-    fill: none;
-    stroke: rgba(255, 255, 255, 0.9);
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-/* ---------- Particles ---------- */
-.preloader-dot {
-    fill: #ffffff;
-    opacity: 0;                  /* JS drives fade-in */
-    transition: opacity 0.3s ease;
+    margin: 0 auto;
 }
 
 /* ---------- Text ---------- */
@@ -130,6 +97,10 @@
     .preloader-content { transform: scale(0.85); }
     .preloader-brand { font-size: 1.2rem; }
     .preloader-tagline { font-size: 0.6rem; }
+    .preloader-video {
+        max-width: 90vw;
+        max-height: 50vh;
+    }
 }
 
 @media (max-height: 560px) {
@@ -143,5 +114,4 @@
     .preloader-overlay { transition: opacity 0.3s ease; }
     .preloader-brand,
     .preloader-tagline { transition: opacity 0.3s ease, transform 0.3s ease; }
-    .preloader-dot { transition: opacity 0.2s ease; }
 }
