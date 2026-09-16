@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Early fetch of the preloader video so playback starts without buffering stutter -->
+    <link rel="preload" as="video" href="assets/Logo.mp4" type="video/mp4">
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animation.css">
@@ -19,16 +22,18 @@
 <body class="home-page">
 
     <!-- ============================================================
-         PRELOADER
+         PRELOADER — Video only
          ------------------------------------------------------------
-         ONLY visual content: assets/Logo.mp4
-         No SVG, no text, no dots, no orbits, no fallback logo.
+         Attributes are the same 4 required ones, plus iOS-compat
+         inline playback and PiP disabled for smoother rendering.
          ============================================================ -->
     <div id="preloader" class="preloader-overlay" role="status" aria-label="Loading">
         <video class="preloader-video"
                autoplay
                muted
                playsinline
+               webkit-playsinline
+               disablepictureinpicture
                preload="auto"
                aria-hidden="true">
             <source src="assets/Logo.mp4" type="video/mp4">
