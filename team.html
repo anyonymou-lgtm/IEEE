@@ -19,7 +19,8 @@
     <style>
         /* ============================================================
            TEAM PAGE — SCOPED STYLES
-           Senior Core + Junior Core, circular photo directory.
+           Senior Core + Junior Core, circular photo directory,
+           with a two-button filter at the top.
            ============================================================ */
 
         /* ---------- Page header (kept from original) ---------- */
@@ -44,8 +45,82 @@
             padding: 60px 0 80px 0;
         }
 
-        .team-block + .team-block {
-            margin-top: 5rem;
+        /* ---------- Filter buttons ---------- */
+        .team-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 0 auto 3rem auto;
+            max-width: 480px;
+        }
+
+        .team-filter-btn {
+            appearance: none;
+            -webkit-appearance: none;
+            font-family: inherit;
+            padding: 0.65rem 1.75rem;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            user-select: none;
+            transition:
+                background 0.25s ease,
+                color 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                transform 0.2s ease;
+        }
+
+        .team-filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--text-main);
+        }
+
+        .team-filter-btn:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .team-filter-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 14px rgba(0, 98, 155, 0.28);
+        }
+
+        html.dark .team-filter-btn.active {
+            color: #0b1120;
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.28);
+        }
+
+        .team-filter-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* ---------- Team block (each filter's section) ---------- */
+        .team-block {
+            /* No top margin between sibling blocks since only one
+               is visible at a time. */
+        }
+
+        .team-block.is-hidden {
+            display: none;
+        }
+
+        .team-block.team-anim {
+            animation: teamFadeIn 0.35s ease;
+        }
+
+        @keyframes teamFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         /* ---------- Section header ---------- */
@@ -184,8 +259,17 @@
             .team-section {
                 padding: 40px 0 60px 0;
             }
-            .team-block + .team-block {
-                margin-top: 3.5rem;
+            .team-filters {
+                margin-bottom: 2.25rem;
+                gap: 0.6rem;
+            }
+            .team-filter-btn {
+                padding: 0.55rem 1.35rem;
+                font-size: 0.72rem;
+                letter-spacing: 0.08em;
+            }
+            .team-block-header {
+                margin-bottom: 2.25rem;
             }
             .team-block-title {
                 font-size: 1.75rem;
@@ -218,6 +302,16 @@
                 width: 100px;
                 height: 100px;
             }
+            .team-filters {
+                gap: 0.5rem;
+                margin-bottom: 2rem;
+            }
+            .team-filter-btn {
+                padding: 0.5rem 1.1rem;
+                font-size: 0.68rem;
+                flex: 1 1 auto;
+                max-width: 160px;
+            }
             .team-block-header {
                 margin-bottom: 2rem;
             }
@@ -234,6 +328,15 @@
                 transition: none;
             }
             .team-member:hover .team-photo {
+                transform: none;
+            }
+            .team-block.team-anim {
+                animation: none;
+            }
+            .team-filter-btn {
+                transition: none;
+            }
+            .team-filter-btn:active {
                 transform: none;
             }
         }
@@ -288,11 +391,37 @@
     </section>
 
     <!-- ============================================================
-         SENIOR CORE — A.Y. 2026-27 (BE Students)
+         TEAM SECTION — with filters
          ============================================================ -->
     <section class="team-section">
         <div class="container">
-            <div class="team-block reveal-up">
+
+            <!-- FILTER BUTTONS -->
+            <div class="team-filters" role="tablist" aria-label="Team filter">
+                <button type="button"
+                        class="team-filter-btn active"
+                        data-target="senior"
+                        role="tab"
+                        aria-selected="true"
+                        aria-controls="team-senior"
+                        id="filter-senior">
+                    Senior Core
+                </button>
+                <button type="button"
+                        class="team-filter-btn"
+                        data-target="junior"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="team-junior"
+                        id="filter-junior">
+                    Junior Core
+                </button>
+            </div>
+
+            <!-- ============================================================
+                 SENIOR CORE — A.Y. 2026-27 (BE Students)
+                 ============================================================ -->
+            <div class="team-block reveal-up" id="team-senior" data-team="senior" role="tabpanel" aria-labelledby="filter-senior">
                 <header class="team-block-header">
                     <h2 class="team-block-title">
                         Senior Core <span class="team-block-year">— A.Y. 2026-27</span>
@@ -311,13 +440,13 @@
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Janhavi Bhoir</h3>
-                        <p class="team-role">Managing Director</p>
+                        <p class="team-role">Managing Director<br>Digital Creative Secretary</p>
                     </div>
 
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Harsh Rane</h3>
-                        <p class="team-role">General Secretary</p>
+                        <p class="team-role">General Secretary<br>Marketing Secretary</p>
                     </div>
 
                     <div class="team-member">
@@ -329,7 +458,7 @@
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Hasya Dhakle</h3>
-                        <p class="team-role">Treasurer</p>
+                        <p class="team-role">Treasurer<br>Digital Creative Secretary</p>
                     </div>
 
                     <div class="team-member">
@@ -341,7 +470,7 @@
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Asmita Kondabathini</h3>
-                        <p class="team-role">Webmaster</p>
+                        <p class="team-role">Webmaster<br>Technical Secretary</p>
                     </div>
 
                     <div class="team-member">
@@ -359,13 +488,7 @@
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Ansh Khartadkar</h3>
-                        <p class="team-role">Event Management &amp; Logistics Secretary</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Asmita Kondabathini</h3>
-                        <p class="team-role">Technical Secretary</p>
+                        <p class="team-role">Event Management &amp; Logistics Secretary<br>Public Relations Secretary</p>
                     </div>
 
                     <div class="team-member">
@@ -382,44 +505,14 @@
 
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Hasya Dhakle</h3>
-                        <p class="team-role">Digital Creative Secretary</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Janhavi Bhoir</h3>
-                        <p class="team-role">Digital Creative Secretary</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Prapti Nagavkar</h3>
-                        <p class="team-role">Marketing Secretary</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Harsh Rane</h3>
-                        <p class="team-role">Marketing Secretary</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Prapti Nagavkar</h3>
-                        <p class="team-role">Public Relations Secretary</p>
+                        <p class="team-role">Marketing Secretary<br>Public Relations Secretary</p>
                     </div>
 
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Aparna Jain</h3>
-                        <p class="team-role">Public Relations Secretary</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Ansh Khartadkar</h3>
-                        <p class="team-role">Public Relations Secretary</p>
+                        <p class="team-role">Public Relations Secretary<br>Reports &amp; Editorial Secretary</p>
                     </div>
 
                     <div class="team-member">
@@ -428,23 +521,14 @@
                         <p class="team-role">Reports &amp; Editorial Secretary</p>
                     </div>
 
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Aparna Jain</h3>
-                        <p class="team-role">Reports &amp; Editorial Secretary</p>
-                    </div>
-
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- ============================================================
-         JUNIOR CORE — A.Y. 2026-27 (TE Students)
-         ============================================================ -->
-    <section class="team-section" style="padding-top: 0;">
-        <div class="container">
-            <div class="team-block reveal-up">
+            <!-- ============================================================
+                 JUNIOR CORE — A.Y. 2026-27 (TE Students)
+                 Hidden by default; shown when the Junior filter is active.
+                 ============================================================ -->
+            <div class="team-block is-hidden" id="team-junior" data-team="junior" role="tabpanel" aria-labelledby="filter-junior" hidden>
                 <header class="team-block-header">
                     <h2 class="team-block-title">
                         Junior Core <span class="team-block-year">— A.Y. 2026-27</span>
@@ -463,7 +547,7 @@
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Navya Sethia</h3>
-                        <p class="team-role">Asst. General Secretary</p>
+                        <p class="team-role">Asst. General Secretary<br>Asst. Social Media Manager</p>
                     </div>
 
                     <div class="team-member">
@@ -475,19 +559,13 @@
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Samiraditya Devre</h3>
-                        <p class="team-role">Asst. Branch Representative</p>
+                        <p class="team-role">Asst. Branch Representative<br>Asst. Event Management &amp; Logistics Secretary</p>
                     </div>
 
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Neerav Lokhande</h3>
-                        <p class="team-role">Asst. Webmaster</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Samiraditya Devre</h3>
-                        <p class="team-role">Asst. Event Management &amp; Logistics Secretary</p>
+                        <p class="team-role">Asst. Webmaster<br>Asst. Technical Secretary</p>
                     </div>
 
                     <div class="team-member">
@@ -500,12 +578,6 @@
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Smeeti Rambade</h3>
                         <p class="team-role">Asst. Event Management &amp; Logistics Secretary</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Neerav Lokhande</h3>
-                        <p class="team-role">Asst. Technical Secretary</p>
                     </div>
 
                     <div class="team-member">
@@ -529,25 +601,13 @@
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Sanchita Parab</h3>
-                        <p class="team-role">Asst. Digital Creative Secretary</p>
+                        <p class="team-role">Asst. Digital Creative Secretary<br>Asst. Reports &amp; Editorial Secretary</p>
                     </div>
 
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Tanish Shinde</h3>
-                        <p class="team-role">Asst. Social Media Manager</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Navya Sethia</h3>
-                        <p class="team-role">Asst. Social Media Manager</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Tanish Shinde</h3>
-                        <p class="team-role">Asst. Marketing Secretary</p>
+                        <p class="team-role">Asst. Social Media Manager<br>Asst. Marketing Secretary</p>
                     </div>
 
                     <div class="team-member">
@@ -576,18 +636,13 @@
 
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Sanchita Parab</h3>
-                        <p class="team-role">Asst. Reports &amp; Editorial Secretary</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Gargi Chapade</h3>
                         <p class="team-role">Asst. Reports &amp; Editorial Secretary</p>
                     </div>
 
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -637,6 +692,59 @@
 
     <script src="js/animation.js"></script>
     <script src="js/main.js"></script>
+
+    <script>
+        /* ============================================================
+           TEAM FILTER — Senior Core / Junior Core
+           Pure client-side toggle. No page reload.
+           ============================================================ */
+        (function () {
+            'use strict';
+
+            const buttons = document.querySelectorAll('.team-filter-btn');
+            const blocks  = document.querySelectorAll('.team-block');
+            if (!buttons.length || !blocks.length) return;
+
+            function activate(target) {
+                blocks.forEach(function (block) {
+                    const isTarget = block.dataset.team === target;
+
+                    /* Toggle visibility */
+                    block.classList.toggle('is-hidden', !isTarget);
+                    if (isTarget) {
+                        block.removeAttribute('hidden');
+                    } else {
+                        block.setAttribute('hidden', '');
+                    }
+
+                    /* Re-trigger the subtle fade-in on the visible block */
+                    if (isTarget) {
+                        block.classList.remove('team-anim');
+                        /* Force reflow so the animation restarts */
+                        void block.offsetWidth;
+                        block.classList.add('team-anim');
+                    } else {
+                        block.classList.remove('team-anim');
+                    }
+                });
+
+                buttons.forEach(function (btn) {
+                    const on = btn.dataset.target === target;
+                    btn.classList.toggle('active', on);
+                    btn.setAttribute('aria-selected', on ? 'true' : 'false');
+                });
+            }
+
+            buttons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    activate(btn.dataset.target);
+                });
+            });
+
+            /* Default state on load: Senior Core active */
+            activate('senior');
+        })();
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
