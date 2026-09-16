@@ -11,11 +11,10 @@
 /* ---------- Overlay ---------- */
 .preloader-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;    /* fallback */
-    height: 100dvh;   /* modern mobile-safe viewport */
+    inset: 0;                 /* top/right/bottom/left = 0 */
+    width: 100%;              /* 100% of containing block (viewport MINUS scrollbar) — NOT 100vw */
+    height: 100vh;            /* fallback */
+    height: 100dvh;           /* modern mobile-safe viewport */
     z-index: 9999;
     margin: 0;
     padding: 0;
@@ -70,15 +69,6 @@ html.preloader-active body {
     height: 100%;
     margin: 0;
     padding: 0;
-}
-
-/* ==================================================
-   RESPONSIVE
-================================================== */
-@media (max-width: 480px) {
-    /* Video already uses object-fit: contain, so it
-       scales down naturally. No additional rules
-       required — kept here only for future needs. */
 }
 
 /* ==================================================
