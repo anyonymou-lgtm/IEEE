@@ -1,17 +1,14 @@
 /* ==================================================
-   PRELOADER — Seamless full-screen #0B1021 video
+   PRELOADER — Video only
    ---------------------------------------------------
-   • Overlay fills the entire viewport (100vw / 100dvh).
-   • Video is an absolutely positioned background layer
-     covering the whole overlay.
-   • No borders, shadows, outlines, or pseudo-elements.
-   • Background colour matches the video's baked-in
-     background exactly (#0B1021), so letterboxing
-     (if any) is invisible — no rectangular seam.
+   • Single full-viewport overlay (#0B1021).
+   • One <video> element fills the overlay.
+   • No SVG, no logo, no text, no dots, no orbits,
+     no pseudo-elements, no fallback visuals.
    • Normal page background is untouched.
    ================================================== */
 
-/* ---------- Overlay (full-screen solid #0B1021) ---------- */
+/* ---------- Overlay ---------- */
 .preloader-overlay {
     position: fixed;
     top: 0;
@@ -41,7 +38,7 @@
     pointer-events: none;
 }
 
-/* ---------- Video (fills the overlay, no seam) ---------- */
+/* ---------- Video (the ONLY preloader visual) ---------- */
 .preloader-video {
     position: absolute;
     inset: 0;
@@ -57,75 +54,13 @@
     box-shadow: none;
     background-color: #0B1021;
     pointer-events: none;
-    z-index: 1;
-}
-
-/* ---------- Content (text overlays on top of the video) ---------- */
-.preloader-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 26px;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-/* ---------- Text ---------- */
-.preloader-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-}
-
-.preloader-brand {
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: 0.35em;
-    color: #ffffff;
-    padding-left: 0.35em;
-    line-height: 1.2;
-    text-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.preloader-brand.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.preloader-tagline {
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.45em;
-    color: rgba(255, 255, 255, 0.6);
-    padding-left: 0.45em;
-    line-height: 1.4;
-    opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.preloader-tagline.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* ==================================================
    SCROLL LOCK WHILE PRELOADER IS ACTIVE
    ---------------------------------------------------
    Prevents the underlying page from showing a
-   scrollbar / gutter behind the fixed preloader,
-   which is a common source of a thin visible seam.
+   scrollbar / gutter behind the fixed overlay.
    Removed automatically once the preloader is done.
    ================================================== */
 html.preloader-active,
@@ -141,13 +76,9 @@ html.preloader-active body {
    RESPONSIVE
 ================================================== */
 @media (max-width: 480px) {
-    .preloader-content { transform: scale(0.9); }
-    .preloader-brand { font-size: 1.2rem; }
-    .preloader-tagline { font-size: 0.6rem; }
-}
-
-@media (max-height: 560px) {
-    .preloader-content { transform: scale(0.72); }
+    /* Video already uses object-fit: contain, so it
+       scales down naturally. No additional rules
+       required — kept here only for future needs. */
 }
 
 /* ==================================================
@@ -155,6 +86,4 @@ html.preloader-active body {
 ================================================== */
 @media (prefers-reduced-motion: reduce) {
     .preloader-overlay { transition: opacity 0.3s ease; }
-    .preloader-brand,
-    .preloader-tagline { transition: opacity 0.3s ease, transform 0.3s ease; }
 }
