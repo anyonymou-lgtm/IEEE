@@ -15,37 +15,19 @@
     <link rel="stylesheet" href="css/responsive.css">
 
     <script src="js/theme.js"></script>
-
-    <style>
-        /* Video preloader responsive styles */
-        .preloader-video {
-            max-width: 80vw;
-            max-height: 60vh;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            display: block;
-            margin: 0 auto;
-        }
-        @media (max-width: 480px) {
-            .preloader-video {
-                max-width: 90vw;
-                max-height: 50vh;
-            }
-        }
-    </style>
 </head>
 <body class="home-page">
 
     <!-- ============================================================
-         PRELOADER — Video version
+         PRELOADER — Seamless full-screen #0B1021 with Logo.mp4
+         Video fills the entire viewport behind the text.
          ============================================================ -->
     <div id="preloader" class="preloader-overlay" role="status" aria-label="Loading">
+        <video class="preloader-video" autoplay muted loop playsinline
+               preload="auto" aria-hidden="true">
+            <source src="assets/Logo.mp4" type="video/mp4">
+        </video>
         <div class="preloader-content">
-            <video class="preloader-video" autoplay muted loop playsinline>
-                <source src="assets/Logo.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
             <div class="preloader-text">
                 <div class="preloader-brand">IEEE RGIT</div>
                 <div class="preloader-tagline">LEARN. EVOLVE.</div>
