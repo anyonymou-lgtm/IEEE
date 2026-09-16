@@ -1,13 +1,12 @@
 /* ==================================================
-   PRELOADER — Seamless video version
+   PRELOADER — Video only
    ---------------------------------------------------
-   • Keeps the existing reveal timing (FADE_START 3200ms)
-     and the existing safety timeout (6500ms).
-   • Adds a scroll-lock class on <html> while the
-     preloader is visible, then removes it on reveal,
-     so the underlying page never shows a scrollbar
-     behind the fixed overlay.
-   • No changes to any other site behaviour.
+   • Keeps the existing reveal timing
+     (FADE_START = 3200ms, safety = 6500ms).
+   • Locks page scroll while the preloader is visible,
+     then releases it on reveal.
+   • NO SVG animation logic.
+   • NO reference to any old text / logo elements.
    ================================================== */
 (function () {
     'use strict';
@@ -15,13 +14,9 @@
     const overlay = document.getElementById('preloader');
     if (!overlay) return;
 
-    const brandEl   = overlay.querySelector('.preloader-brand');
-    const taglineEl = overlay.querySelector('.preloader-tagline');
     const heroContent = document.querySelector('.hero-content');
 
-    /* Lock the page scroll while the preloader is up.
-       This prevents a scrollbar / gutter from appearing
-       behind the fixed overlay. */
+    /* Lock scroll while the preloader is up. */
     document.documentElement.classList.add('preloader-active');
 
     let revealed = false;
@@ -42,41 +37,20 @@
         }, 550);
     }
 
-    /* -------------------------------------------------
-       Reduced motion: reveal quickly, no long animation
-    ------------------------------------------------- */
+    /* Reduced motion: reveal quickly. */
     const prefersReducedMotion =
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (prefersReducedMotion) {
-        if (brandEl)   brandEl.classList.add('visible');
-        if (taglineEl) taglineEl.classList.add('visible');
         setTimeout(revealSite, 500);
         return;
     }
 
-    /* -------------------------------------------------
-       Text fade-in (kept from the original preloader)
-    ------------------------------------------------- */
-    setTimeout(function () {
-        if (brandEl) brandEl.classList.add('visible');
-    }, 500);
-
-    setTimeout(function () {
-        if (taglineEl) taglineEl.classList.add('visible');
-    }, 800);
-
-    /* -------------------------------------------------
-       Reveal the site after the same delay as before.
-       (Original FADE_START = 3200ms — unchanged.)
-    ------------------------------------------------- */
+    /* Same reveal timing as before — unchanged. */
     const FADE_START = 3200;
     setTimeout(revealSite, FADE_START);
 
-    /* -------------------------------------------------
-       Safety net — never leave the page hidden.
-       (Original 6500ms — unchanged.)
-    ------------------------------------------------- */
+    /* Safety net — never leave the page hidden. */
     setTimeout(revealSite, 6500);
 
 })();
