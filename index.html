@@ -19,20 +19,20 @@
 <body class="home-page">
 
     <!-- ============================================================
-         PRELOADER — Seamless full-screen #0B1021 with Logo.mp4
-         Video fills the entire viewport behind the text.
+         PRELOADER
+         ------------------------------------------------------------
+         ONLY visual content: assets/Logo.mp4
+         No SVG, no text, no dots, no orbits, no fallback logo.
          ============================================================ -->
     <div id="preloader" class="preloader-overlay" role="status" aria-label="Loading">
-        <video class="preloader-video" autoplay muted loop playsinline
-               preload="auto" aria-hidden="true">
+        <video class="preloader-video"
+               autoplay
+               muted
+               playsinline
+               preload="auto"
+               aria-hidden="true">
             <source src="assets/Logo.mp4" type="video/mp4">
         </video>
-        <div class="preloader-content">
-            <div class="preloader-text">
-                <div class="preloader-brand">IEEE RGIT</div>
-                <div class="preloader-tagline">LEARN. EVOLVE.</div>
-            </div>
-        </div>
     </div>
 
     <!-- NAVBAR -->
