@@ -24,11 +24,13 @@
     <!-- ============================================================
          PRELOADER — Video only
          ------------------------------------------------------------
-         Attributes are the same 4 required ones, plus iOS-compat
-         inline playback and PiP disabled for smoother rendering.
+         Playback rate is set to 4/3 so the ~4s animation completes
+         in ~3s. The rate is applied as early as possible (inline
+         script below) AND again defensively in js/animation.js.
          ============================================================ -->
     <div id="preloader" class="preloader-overlay" role="status" aria-label="Loading">
-        <video class="preloader-video"
+        <video id="preloader-video"
+               class="preloader-video"
                autoplay
                muted
                playsinline
@@ -38,6 +40,19 @@
                aria-hidden="true">
             <source src="assets/Logo.mp4" type="video/mp4">
         </video>
+
+        <!-- Apply playback rate as early as possible so the very
+             first frame already plays at the accelerated speed. -->
+        <script>
+            (function () {
+                var v = document.getElementById('preloader-video');
+                if (!v) return;
+                try { v.playbackRate = 4 / 3; } catch (e) {}
+                v.addEventListener('loadedmetadata', function () {
+                    try { v.playbackRate = 4 / 3; } catch (e) {}
+                });
+            })();
+        </script>
     </div>
 
     <!-- NAVBAR -->
