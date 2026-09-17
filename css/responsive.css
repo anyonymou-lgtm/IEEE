@@ -437,3 +437,125 @@
         gap: 8px;
     }
 }
+
+/* ==================================================
+   TECHPORGE'26 EVENT DETAIL — MOBILE ALIGNMENT FIX
+   ---------------------------------------------------
+   Scoped strictly to #detail-techforge so no other
+   event, page, or desktop layout is affected.
+
+   Fixes:
+   • Allows grid/flex children to shrink below their
+     intrinsic content size (min-width: 0).
+   • Forces multi-column sections to stack on small
+     screens (single column).
+   • Ensures long words, labels, and score tables
+     wrap instead of pushing the card off-centre.
+   • Keeps the card and its padding fully inside the
+     mobile viewport.
+   ================================================== */
+
+/* ---------- Tablet & small laptop ---------- */
+@media (max-width: 900px) {
+    .events-page #detail-techforge .flagship-card,
+    .events-page #detail-techforge .flagship-header,
+    .events-page #detail-techforge .flagship-body,
+    .events-page #detail-techforge .flagship-section,
+    .events-page #detail-techforge .flagship-accomplishments,
+    .events-page #detail-techforge .flagship-meta,
+    .events-page #detail-techforge .flagship-meta .event-meta-item,
+    .events-page #detail-techforge .flagship-meta .event-meta-text,
+    .events-page #detail-techforge .flagship-meta .event-meta-value,
+    .events-page #detail-techforge .team-grid-flagship,
+    .events-page #detail-techforge .team-block-flagship,
+    .events-page #detail-techforge .team-block-flagship ul,
+    .events-page #detail-techforge .team-block-flagship li,
+    .events-page #detail-techforge .stat-row,
+    .events-page #detail-techforge .stat-box,
+    .events-page #detail-techforge .table-wrapper {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .events-page #detail-techforge .data-table {
+        max-width: 100%;
+    }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 640px) {
+    /* Force every multi-column area to stack */
+    .events-page #detail-techforge .flagship-meta,
+    .events-page #detail-techforge .team-grid-flagship,
+    .events-page #detail-techforge .stat-row {
+        grid-template-columns: 1fr;
+    }
+
+    /* Tables scroll internally, never push the page */
+    .events-page #detail-techforge .table-wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        box-sizing: border-box;
+    }
+
+    /* Balanced internal padding so content isn't
+       squeezed to one side or touching the edges */
+    .events-page #detail-techforge .flagship-header {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .events-page #detail-techforge .flagship-body {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Allow long words / labels / scores to wrap */
+    .events-page #detail-techforge .flagship-card,
+    .events-page #detail-techforge .flagship-header,
+    .events-page #detail-techforge .flagship-body,
+    .events-page #detail-techforge .flagship-section,
+    .events-page #detail-techforge .flagship-section p,
+    .events-page #detail-techforge .flagship-section li,
+    .events-page #detail-techforge .flagship-title,
+    .events-page #detail-techforge .flagship-tagline,
+    .events-page #detail-techforge .flagship-eyebrow,
+    .events-page #detail-techforge .flagship-section-title,
+    .events-page #detail-techforge .flagship-accomplishments,
+    .events-page #detail-techforge .event-meta-value,
+    .events-page #detail-techforge .team-block-flagship li,
+    .events-page #detail-techforge .team-block-flagship li small,
+    .events-page #detail-techforge .stat-box {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+}
+
+/* ---------- Small phones ---------- */
+@media (max-width: 400px) {
+    .events-page #detail-techforge .flagship-header {
+        padding-top: 3rem;
+        padding-left: 0.85rem;
+        padding-right: 0.85rem;
+    }
+
+    .events-page #detail-techforge .flagship-body {
+        padding: 0.9rem 0.85rem;
+    }
+
+    .events-page #detail-techforge .flagship-title {
+        font-size: 1.3rem;
+    }
+
+    .events-page #detail-techforge .flagship-section-title {
+        font-size: 1rem;
+    }
+
+    .events-page #detail-techforge .data-table {
+        min-width: 360px; /* still scrolls inside .table-wrapper */
+    }
+}
