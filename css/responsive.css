@@ -213,6 +213,8 @@
 
 /* ==================================================
    RESPONSIVE — EVENTS PAGE
+   ---------------------------------------------------
+   Base event-detail responsive rules (all events).
 ================================================== */
 
 @media (max-width: 900px) {
@@ -439,123 +441,354 @@
 }
 
 /* ==================================================
-   TECHPORGE'26 EVENT DETAIL — MOBILE ALIGNMENT FIX
+   EVENTS PAGE — MOBILE OVERFLOW / LAYOUT FIX
    ---------------------------------------------------
-   Scoped strictly to #detail-techforge so no other
-   event, page, or desktop layout is affected.
+   Root-cause correction for horizontal page overflow
+   on phones. Prevents any container, grid, or flex
+   child from pushing the page wider than the viewport.
 
-   Fixes:
-   • Allows grid/flex children to shrink below their
-     intrinsic content size (min-width: 0).
-   • Forces multi-column sections to stack on small
-     screens (single column).
-   • Ensures long words, labels, and score tables
-     wrap instead of pushing the card off-centre.
-   • Keeps the card and its padding fully inside the
-     mobile viewport.
+   Covers ALL events (Sahyadri, LaTeX, Adani, TechForge).
+
+   Desktop (>= 901px) is COMPLETELY untouched.
    ================================================== */
 
-/* ---------- Tablet & small laptop ---------- */
+/* ---------- Universal safety net inside the Events page ---------- */
+.events-page {
+    overflow-x: hidden;
+}
+
+/* ---------- Every layout container inside an event detail ---------- */
+.events-page .event-detail,
+.events-page .event-block,
+.events-page .event-flagship,
+.events-page .event-card-full,
+.events-page .flagship-card,
+.events-page .flagship-header,
+.events-page .flagship-body,
+.events-page .flagship-section,
+.events-page .flagship-accomplishments,
+.events-page .accomplishments,
+.events-page .events-hero,
+.events-page .events-intro {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* ---------- Every grid/flex child chain inside an event detail ---------- */
+.events-page .event-meta-grid,
+.events-page .event-meta-item,
+.events-page .event-meta-text,
+.events-page .event-meta-value,
+.events-page .explore-grid,
+.events-page .explore-item,
+.events-page .flagship-meta,
+.events-page .flagship-meta .event-meta-item,
+.events-page .flagship-meta .event-meta-text,
+.events-page .flagship-meta .event-meta-value,
+.events-page .team-grid-flagship,
+.events-page .team-block-flagship,
+.events-page .team-block-flagship ul,
+.events-page .team-block-flagship li,
+.events-page .stat-row,
+.events-page .stat-box,
+.events-page .flagship-section p,
+.events-page .flagship-section .bullet-list,
+.events-page .flagship-section .bullet-list li,
+.events-page .accomplishments-list,
+.events-page .accomplishments-list li,
+.events-page .table-wrapper,
+.events-page .data-table,
+.events-page .events-cards-grid,
+.events-page .event-card-compact {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* ---------- Long unbreakable strings wrap everywhere inside event details ---------- */
+.events-page .event-detail,
+.events-page .event-detail p,
+.events-page .event-detail li,
+.events-page .event-detail td,
+.events-page .event-detail th,
+.events-page .event-detail h1,
+.events-page .event-detail h2,
+.events-page .event-detail h3,
+.events-page .event-detail h4,
+.events-page .event-detail strong,
+.events-page .event-detail small,
+.events-page .event-detail a,
+.events-page .event-detail span,
+.events-page .flagship-title,
+.events-page .flagship-tagline,
+.events-page .flagship-eyebrow,
+.events-page .flagship-section-title,
+.events-page .event-card-title,
+.events-page .event-card-location,
+.events-page .event-meta-value,
+.events-page .team-block-flagship li,
+.events-page .team-block-flagship li small,
+.events-page .accomplishments-list li,
+.events-page .flagship-section .bullet-list li {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/* ===============================================
+   Tablet & small laptop
+   =============================================== */
 @media (max-width: 900px) {
-    .events-page #detail-techforge .flagship-card,
-    .events-page #detail-techforge .flagship-header,
-    .events-page #detail-techforge .flagship-body,
-    .events-page #detail-techforge .flagship-section,
-    .events-page #detail-techforge .flagship-accomplishments,
-    .events-page #detail-techforge .flagship-meta,
-    .events-page #detail-techforge .flagship-meta .event-meta-item,
-    .events-page #detail-techforge .flagship-meta .event-meta-text,
-    .events-page #detail-techforge .flagship-meta .event-meta-value,
-    .events-page #detail-techforge .team-grid-flagship,
-    .events-page #detail-techforge .team-block-flagship,
-    .events-page #detail-techforge .team-block-flagship ul,
-    .events-page #detail-techforge .team-block-flagship li,
-    .events-page #detail-techforge .stat-row,
-    .events-page #detail-techforge .stat-box,
-    .events-page #detail-techforge .table-wrapper {
+    /* Container gets safe side padding */
+    .events-page .container {
         width: 100%;
         max-width: 100%;
-        min-width: 0;
+        padding-left: 20px;
+        padding-right: 20px;
         box-sizing: border-box;
     }
 
-    .events-page #detail-techforge .data-table {
+    /* Back button wrapper aligned with container */
+    .events-page .event-detail .event-detail-back-wrap {
+        width: 100%;
         max-width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
+        margin-bottom: 1rem;
     }
-}
 
-/* ---------- Mobile ---------- */
-@media (max-width: 640px) {
-    /* Force every multi-column area to stack */
-    .events-page #detail-techforge .flagship-meta,
-    .events-page #detail-techforge .team-grid-flagship,
-    .events-page #detail-techforge .stat-row {
+    /* Multi-column sections collapse to single column */
+    .events-page .event-meta-grid,
+    .events-page .explore-grid,
+    .events-page .flagship-meta,
+    .events-page .team-grid-flagship {
         grid-template-columns: 1fr;
     }
 
-    /* Tables scroll internally, never push the page */
-    .events-page #detail-techforge .table-wrapper {
+    /* Stat row: two per row on tablets */
+    .events-page .stat-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Bullet list items: icon + text, icon fixed size */
+    .events-page .flagship-section .bullet-list li,
+    .events-page .accomplishments-list li {
+        display: grid;
+        grid-template-columns: 16px minmax(0, 1fr);
+        align-items: start;
+        gap: 10px;
+    }
+
+    .events-page .flagship-section .bullet-list li > svg,
+    .events-page .accomplishments-list li > svg {
+        width: 16px;
+        height: 16px;
+        min-width: 16px;
+        max-width: 16px;
+        flex-shrink: 0;
+        margin-top: 4px;
+    }
+
+    /* Meta items: icon fixed size, text can shrink */
+    .events-page .event-meta-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .events-page .event-meta-icon {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        max-width: 30px;
+        flex-shrink: 0;
+    }
+
+    .events-page .event-meta-text {
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+}
+
+/* ===============================================
+   Phone sizes
+   =============================================== */
+@media (max-width: 640px) {
+    /* Container side padding is comfortable on phones */
+    .events-page .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .events-page .event-detail .event-detail-back-wrap {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    /* Event cards don't get extra outer padding */
+    .events-page .events-cards-grid {
+        gap: 1rem;
+    }
+
+    .events-page .event-card-compact {
+        padding: 1.25rem;
+        border-radius: 14px;
+    }
+
+    .events-page .event-card-full {
+        padding: 1.25rem;
+        border-radius: 14px;
+    }
+
+    /* Flagship card padding tuned for phones */
+    .events-page .flagship-header {
+        padding: 3rem 1rem 1.25rem 1rem;
+    }
+
+    .events-page .flagship-body {
+        padding: 1rem;
+        gap: 1.5rem;
+    }
+
+    .events-page .flagship-accomplishments,
+    .events-page .accomplishments {
+        padding: 1rem;
+    }
+
+    /* Section headers */
+    .events-page .flagship-title {
+        font-size: 1.55rem;
+    }
+
+    .events-page .flagship-section-title {
+        font-size: 1.08rem;
+    }
+
+    /* Tables always scroll internally — never push the page */
+    .events-page .table-wrapper {
         width: 100%;
         max-width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        box-sizing: border-box;
     }
 
-    /* Balanced internal padding so content isn't
-       squeezed to one side or touching the edges */
-    .events-page #detail-techforge .flagship-header {
-        padding-left: 1rem;
-        padding-right: 1rem;
+    .events-page .data-table {
+        min-width: 420px;
     }
 
-    .events-page #detail-techforge .flagship-body {
-        padding-left: 1rem;
-        padding-right: 1rem;
+    /* Tighten stat boxes */
+    .events-page .stat-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.55rem;
     }
 
-    /* Allow long words / labels / scores to wrap */
-    .events-page #detail-techforge .flagship-card,
-    .events-page #detail-techforge .flagship-header,
-    .events-page #detail-techforge .flagship-body,
-    .events-page #detail-techforge .flagship-section,
-    .events-page #detail-techforge .flagship-section p,
-    .events-page #detail-techforge .flagship-section li,
-    .events-page #detail-techforge .flagship-title,
-    .events-page #detail-techforge .flagship-tagline,
-    .events-page #detail-techforge .flagship-eyebrow,
-    .events-page #detail-techforge .flagship-section-title,
-    .events-page #detail-techforge .flagship-accomplishments,
-    .events-page #detail-techforge .event-meta-value,
-    .events-page #detail-techforge .team-block-flagship li,
-    .events-page #detail-techforge .team-block-flagship li small,
-    .events-page #detail-techforge .stat-box {
-        overflow-wrap: anywhere;
-        word-break: break-word;
+    .events-page .stat-box {
+        padding: 0.75rem 0.6rem;
+    }
+
+    .events-page .stat-box .stat-value {
+        font-size: 1.25rem;
+    }
+
+    .events-page .stat-box .stat-label {
+        font-size: 0.65rem;
+    }
+
+    /* Tighten timeline items */
+    .events-page .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+    }
+
+    .events-page .timeline-time {
+        padding-top: 0;
     }
 }
 
-/* ---------- Small phones ---------- */
-@media (max-width: 400px) {
-    .events-page #detail-techforge .flagship-header {
-        padding-top: 3rem;
-        padding-left: 0.85rem;
-        padding-right: 0.85rem;
+/* ===============================================
+   Very narrow phones (390px and below)
+   =============================================== */
+@media (max-width: 430px) {
+    .events-page .container {
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
-    .events-page #detail-techforge .flagship-body {
-        padding: 0.9rem 0.85rem;
+    .events-page .event-detail .event-detail-back-wrap {
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
-    .events-page #detail-techforge .flagship-title {
-        font-size: 1.3rem;
+    .events-page .event-card-compact,
+    .events-page .event-card-full {
+        padding: 1.1rem;
     }
 
-    .events-page #detail-techforge .flagship-section-title {
+    .events-page .flagship-header {
+        padding: 2.75rem 0.9rem 1.1rem 0.9rem;
+    }
+
+    .events-page .flagship-body {
+        padding: 0.9rem;
+    }
+
+    .events-page .flagship-accomplishments,
+    .events-page .accomplishments {
+        padding: 0.9rem;
+    }
+
+    .events-page .flagship-title {
+        font-size: 1.35rem;
+    }
+
+    .events-page .flagship-section-title {
         font-size: 1rem;
     }
 
-    .events-page #detail-techforge .data-table {
-        min-width: 360px; /* still scrolls inside .table-wrapper */
+    .events-page .data-table {
+        min-width: 380px;
+    }
+
+    /* Keep 2 stat boxes per row but reduce padding */
+    .events-page .stat-box {
+        padding: 0.65rem 0.5rem;
+    }
+
+    .events-page .stat-box .stat-value {
+        font-size: 1.15rem;
+    }
+}
+
+/* ===============================================
+   Smallest phones (360px and below)
+   =============================================== */
+@media (max-width: 360px) {
+    .events-page .container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .events-page .event-detail .event-detail-back-wrap {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .events-page .flagship-header {
+        padding: 2.5rem 0.75rem 1rem 0.75rem;
+    }
+
+    .events-page .flagship-body {
+        padding: 0.75rem;
+    }
+
+    .events-page .stat-row {
+        grid-template-columns: 1fr;
+    }
+
+    .events-page .data-table {
+        min-width: 340px;
     }
 }
