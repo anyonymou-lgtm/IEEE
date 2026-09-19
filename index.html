@@ -9,369 +9,358 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Early fetch of the preloader video so playback starts without buffering stutter -->
-    <link rel="preload" as="video" href="assets/Logo.mp4" type="video/mp4">
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animation.css">
     <link rel="stylesheet" href="css/responsive.css">
 
+    <script>
+        (function () {
+            var isMobile = window.innerWidth < 768;
+            window.__preloaderDuration = isMobile ? 2500 : 4000;
+            document.documentElement.style.setProperty(
+                '--preloader-duration',
+                window.__preloaderDuration + 'ms'
+            );
+        })();
+    </script>
+
     <script src="js/theme.js"></script>
+
+    <noscript>
+        <style>
+            #preloader { display: none !important; }
+            #main-content { opacity: 1 !important; }
+        </style>
+    </noscript>
 </head>
 <body class="home-page">
 
-    <!-- ============================================================
-         PRELOADER — Video only
-         ------------------------------------------------------------
-         Playback rate is set to 4/3 so the ~4s animation completes
-         in ~3s. The rate is applied as early as possible (inline
-         script below) AND again defensively in js/animation.js.
-         ============================================================ -->
     <div id="preloader" class="preloader-overlay" role="status" aria-label="Loading">
-        <video id="preloader-video"
-               class="preloader-video"
-               autoplay
-               muted
-               playsinline
-               webkit-playsinline
-               disablepictureinpicture
-               preload="auto"
-               aria-hidden="true">
-            <source src="assets/Logo.mp4" type="video/mp4">
-        </video>
-
-        <!-- Apply playback rate as early as possible so the very
-             first frame already plays at the accelerated speed. -->
-        <script>
-            (function () {
-                var v = document.getElementById('preloader-video');
-                if (!v) return;
-                try { v.playbackRate = 4 / 3; } catch (e) {}
-                v.addEventListener('loadedmetadata', function () {
-                    try { v.playbackRate = 4 / 3; } catch (e) {}
-                });
-            })();
-        </script>
+        <div class="preloader-stage">
+            <div class="preloader-ring preloader-ring-1"></div>
+            <div class="preloader-ring preloader-ring-2"></div>
+            <div class="preloader-ring preloader-ring-3"></div>
+            <div class="preloader-core"></div>
+        </div>
+        <div class="preloader-text">
+            <div class="preloader-brand">IEEE RGIT</div>
+            <div class="preloader-tagline">LEARN. EVOLVE.</div>
+        </div>
     </div>
 
-    <!-- NAVBAR -->
-    <header class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="brand">
-                <div class="brand-icon">
-                    <img src="assets/Recruitment Poster.png" alt="IEEE-RGIT Logo">
-                </div>
-            </a>
+    <div id="main-content" class="main-content">
 
-            <nav class="nav-links">
-                <a href="index.html" class="nav-link" style="color: var(--primary); font-weight: 700;">Home</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="events.html" class="nav-link">Events</a>
-                <a href="gallery.html" class="nav-link">Gallery</a>
-                <a href="team.html" class="nav-link">Team</a>
-            </nav>
-
-            <div class="nav-actions">
-                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
-                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-                </button>
-                <button id="mobile-menu-btn" class="icon-btn mobile-only" aria-label="Menu">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/></svg>
-                </button>
-            </div>
-        </div>
-        
-        <div class="mobile-menu" id="mobile-menu">
-            <a href="index.html" class="mobile-link" style="color: var(--primary);">Home</a>
-            <a href="about.html" class="mobile-link">About</a>
-            <a href="events.html" class="mobile-link">Events</a>
-            <a href="gallery.html" class="mobile-link">Gallery</a>
-            <a href="team.html" class="mobile-link">Team</a>
-        </div>
-    </header>
-
-    <!-- HERO -->
-    <section class="hero" id="home">
-        <div class="tech-lines-container" id="hero-tech-lines"></div>
-        <div class="hero-content">
-            <div class="badge">RAJIV GANDHI INSTITUTE OF TECHNOLOGY</div>
-            <h1 class="hero-title">Shaping the Future of Engineering with <span class="highlight">IEEE-RGIT</span></h1>
-            <p class="hero-subtitle">Empowering student innovators through collaborative research, hands-on technical workshops, VLSI design, embedded systems, and cutting-edge engineering projects.</p>
-
-            <div class="hero-cta">
-                <a href="events.html" class="hover-cta" aria-label="Explore Events">
-                    <span class="hover-cta-text">
-                        Explore Events
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                        </svg>
-                    </span>
-                </a>
-                <a href="about.html" class="hover-cta" aria-label="Learn More">
-                    <span class="hover-cta-text">
-                        Learn More
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                        </svg>
-                    </span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ABOUT SECTION -->
-    <section class="section" id="about">
-        <div class="container grid-2-col">
-            <div class="about-text reveal-left">
-                <div class="section-line"></div>
-                <h2 class="section-title">About IEEE-RGIT</h2>
-                <p class="text-muted">The IEEE Student Branch at Rajiv Gandhi Institute of Technology (RGIT) serves as a dynamic hub for engineering enthusiasts. We foster technical competence, professional networking, and ethical innovation across multiple domains.</p>
-                <p class="text-muted">With a specialized focus on <strong>VLSI and Embedded Systems</strong>, our community provides students with rigorous practical exposure, bridging core academic curriculum with real-world industry demands.</p>
-            </div>
-            <div class="about-card reveal-right">
-                <div class="card-glass">
-                    <div class="tech-decorative-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <header class="navbar" id="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="brand">
+                    <div class="brand-icon">
+                        <img src="assets/Recruitment Poster.png" alt="IEEE-RGIT Logo">
                     </div>
-                    <h3>Core Objectives</h3>
-                    <ul class="objective-list">
-                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Promoting technical excellence in hardware & software.</li>
-                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Hosting research seminars and bootcamps.</li>
-                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Mentoring teams for technical showcases.</li>
+                </a>
+
+                <nav class="nav-links">
+                    <a href="index.html" class="nav-link" style="color: var(--primary); font-weight: 700;">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="events.html" class="nav-link">Events</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="team.html" class="nav-link">Team</a>
+                </nav>
+
+                <div class="nav-actions">
+                    <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                    </button>
+                    <button id="mobile-menu-btn" class="icon-btn mobile-only" aria-label="Menu">
+                        <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                            <line class="hamburger-line hamburger-line-top" x1="4" y1="7" x2="20" y2="7"/>
+                            <line class="hamburger-line hamburger-line-mid" x1="4" y1="12" x2="20" y2="12"/>
+                            <line class="hamburger-line hamburger-line-bot" x1="4" y1="17" x2="20" y2="17"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mobile-menu" id="mobile-menu">
+                <a href="index.html" class="mobile-link" style="color: var(--primary);">Home</a>
+                <a href="about.html" class="mobile-link">About</a>
+                <a href="events.html" class="mobile-link">Events</a>
+                <a href="gallery.html" class="mobile-link">Gallery</a>
+                <a href="team.html" class="mobile-link">Team</a>
+            </div>
+        </header>
+
+        <section class="hero" id="home">
+            <div class="tech-lines-container" id="hero-tech-lines"></div>
+            <div class="hero-content">
+                <div class="badge">RAJIV GANDHI INSTITUTE OF TECHNOLOGY</div>
+                <h1 class="hero-title">Shaping the Future of Engineering with <span class="highlight">IEEE-RGIT</span></h1>
+                <p class="hero-subtitle">Empowering student innovators through collaborative research, hands-on technical workshops, VLSI design, embedded systems, and cutting-edge engineering projects.</p>
+
+                <div class="hero-cta">
+                    <a href="events.html" class="hover-cta" aria-label="Explore Events">
+                        <span class="hover-cta-text">
+                            Explore Events
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="about.html" class="hover-cta" aria-label="Learn More">
+                        <span class="hover-cta-text">
+                            Learn More
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <div class="container grid-2-col">
+                <div class="about-text reveal-left">
+                    <div class="section-line"></div>
+                    <h2 class="section-title">About IEEE-RGIT</h2>
+                    <p class="text-muted">The IEEE Student Branch at Rajiv Gandhi Institute of Technology (RGIT) serves as a dynamic hub for engineering enthusiasts. We foster technical competence, professional networking, and ethical innovation across multiple domains.</p>
+                    <p class="text-muted">With a specialized focus on <strong>VLSI and Embedded Systems</strong>, our community provides students with rigorous practical exposure, bridging core academic curriculum with real-world industry demands.</p>
+                </div>
+                <div class="about-card reveal-right">
+                    <div class="card-glass">
+                        <div class="tech-decorative-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                        <h3>Core Objectives</h3>
+                        <ul class="objective-list">
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Promoting technical excellence in hardware & software.</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Hosting research seminars and bootcamps.</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Mentoring teams for technical showcases.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section bg-alt" id="events">
+            <div class="container">
+                <div class="section-header reveal-up">
+                    <h2 class="section-title">Events & Activities</h2>
+                    <p class="section-subtitle">Technical seminars, coding challenges, and annual symposia.</p>
+                </div>
+                <div class="event-list stagger-container">
+                    <div class="event-card stagger-item">
+                        <div class="event-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
+                        <div class="event-info">
+                            <h3>VLSI & Embedded Systems Bootcamp</h3>
+                            <p class="text-muted">RGIT Seminar Hall • Active Semesters</p>
+                        </div>
+                        <div class="event-status">Ongoing</div>
+                    </div>
+                    <div class="event-card stagger-item">
+                        <div class="event-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
+                        <div class="event-info">
+                            <h3>Annual Technical Paper Presentation</h3>
+                            <p class="text-muted">Main Auditorium • Upcoming</p>
+                        </div>
+                        <div class="event-status"><a href="events.html">Register</a></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section tech-marquee-section" id="technologies">
+            <div class="container">
+                <div class="section-header reveal-up">
+                    <h2 class="section-title tech-section-title">Technologies We Work With</h2>
+                    <div class="section-line" style="margin: 0 auto 1.5rem auto;"></div>
+                </div>
+            </div>
+
+            <div class="marquee-wrapper">
+                <div class="marquee-track marquee-track-1" aria-hidden="true">
+                    <span class="tech-pill">GNU Radio</span>
+                    <span class="tech-pill">MATLAB</span>
+                    <span class="tech-pill">ESP-IDF</span>
+                    <span class="tech-pill">AWS IoT Core</span>
+                    <span class="tech-pill">Docker</span>
+                    <span class="tech-pill">PostgreSQL</span>
+                    <span class="tech-pill">SciPy/NumPy</span>
+                    <span class="tech-pill">Verilog/VHDL</span>
+                    <span class="tech-pill">KiCad</span>
+                    <span class="tech-pill">FreeRTOS</span>
+                    <span class="tech-pill">keil</span>
+                    <span class="tech-pill">Proteus Software</span>
+                    <span class="tech-pill">Scilab</span>
+                    <span class="tech-pill">Arduino uno</span>
+                    <span class="tech-pill">Arduino IDE</span>
+                    <span class="tech-pill">HFSS</span>
+
+                    <span class="tech-pill">GNU Radio</span>
+                    <span class="tech-pill">MATLAB</span>
+                    <span class="tech-pill">ESP-IDF</span>
+                    <span class="tech-pill">AWS IoT Core</span>
+                    <span class="tech-pill">Docker</span>
+                    <span class="tech-pill">PostgreSQL</span>
+                    <span class="tech-pill">SciPy/NumPy</span>
+                    <span class="tech-pill">Verilog/VHDL</span>
+                    <span class="tech-pill">KiCad</span>
+                    <span class="tech-pill">FreeRTOS</span>
+                    <span class="tech-pill">keil</span>
+                    <span class="tech-pill">Proteus Software</span>
+                    <span class="tech-pill">Scilab</span>
+                    <span class="tech-pill">Arduino uno</span>
+                    <span class="tech-pill">Arduino IDE</span>
+                    <span class="tech-pill">HFSS</span>
+                </div>
+            </div>
+
+            <div class="marquee-wrapper">
+                <div class="marquee-track marquee-track-2" aria-hidden="true">
+                    <span class="tech-pill">GNU Radio</span>
+                    <span class="tech-pill">MATLAB</span>
+                    <span class="tech-pill">ESP-IDF</span>
+                    <span class="tech-pill">AWS IoT Core</span>
+                    <span class="tech-pill">Docker</span>
+                    <span class="tech-pill">PostgreSQL</span>
+                    <span class="tech-pill">SciPy/NumPy</span>
+                    <span class="tech-pill">Verilog/VHDL</span>
+                    <span class="tech-pill">KiCad</span>
+                    <span class="tech-pill">FreeRTOS</span>
+                    <span class="tech-pill">keil</span>
+                    <span class="tech-pill">Proteus Software</span>
+                    <span class="tech-pill">Scilab</span>
+                    <span class="tech-pill">Arduino uno</span>
+                    <span class="tech-pill">Arduino IDE</span>
+                    <span class="tech-pill">HFSS</span>
+
+                    <span class="tech-pill">GNU Radio</span>
+                    <span class="tech-pill">MATLAB</span>
+                    <span class="tech-pill">ESP-IDF</span>
+                    <span class="tech-pill">AWS IoT Core</span>
+                    <span class="tech-pill">Docker</span>
+                    <span class="tech-pill">PostgreSQL</span>
+                    <span class="tech-pill">SciPy/NumPy</span>
+                    <span class="tech-pill">Verilog/VHDL</span>
+                    <span class="tech-pill">KiCad</span>
+                    <span class="tech-pill">FreeRTOS</span>
+                    <span class="tech-pill">keil</span>
+                    <span class="tech-pill">Proteus Software</span>
+                    <span class="tech-pill">Scilab</span>
+                    <span class="tech-pill">Arduino uno</span>
+                    <span class="tech-pill">Arduino IDE</span>
+                    <span class="tech-pill">HFSS</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section signal-match-section" id="signal-match">
+            <div class="container">
+                <div class="section-header reveal-up">
+                    <h2 class="section-title">Play Signal Match</h2>
+                    <p class="section-subtitle">Take a quick break and test your signal recognition skills.</p>
+                </div>
+                <div class="game-launch-wrapper reveal-up">
+                    <button id="launchMatchBtn" class="hover-cta" aria-label="Play Now">
+                        <span class="hover-cta-text">
+                            Play Now
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="gallery">
+            <div class="container">
+                <div class="section-header reveal-up">
+                    <h2 class="section-title">Gallery</h2>
+                    <p class="section-subtitle">Snapshots from our workshops, technical sessions, and campus events.</p>
+                </div>
+                <div class="gallery-grid stagger-container" id="gallery-grid">
+                </div>
+            </div>
+        </section>
+
+        <div id="lightbox" class="lightbox">
+            <span class="lightbox-close">&times;</span>
+            <div class="lightbox-content">
+                <img id="lightbox-image" src="" alt="Gallery Image" style="max-width: 100%; max-height: 70vh; border-radius: 8px;">
+                <p id="lightbox-caption" style="margin-top: 1rem;"></p>
+            </div>
+        </div>
+
+        <div id="signalMatchModal" class="signal-match-modal-overlay">
+            <div class="signal-match-modal-backdrop"></div>
+            <div class="signal-match-modal-window">
+                <button class="signal-match-modal-close" id="closeSignalMatchModal" aria-label="Close game">×</button>
+                <div class="signal-match-modal-body">
+                    <iframe id="signalMatchIframe" src="games/signal-match.html" title="Signal Match"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container footer-grid">
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <div class="brand-icon"><img src="assets/Recruitment Poster.png" alt="IEEE-RGIT Logo" style="filter: brightness(0) invert(1); height: 32px;"></div>
+                        <span class="brand-title">IEEE-RGIT</span>
+                    </div>
+                    <p class="footer-desc">Rajiv Gandhi Institute of Technology Student Branch dedicated to fostering technical innovation and engineering excellence.</p>
+                    <div class="footer-highlight">IEEE-RGIT Student Run Program for VLSI and Embedded Systems</div>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="team.html">Team</a></li>
                     </ul>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- EVENTS & ACTIVITIES -->
-    <section class="section bg-alt" id="events">
-        <div class="container">
-            <div class="section-header reveal-up">
-                <h2 class="section-title">Events & Activities</h2>
-                <p class="section-subtitle">Technical seminars, coding challenges, and annual symposia.</p>
-            </div>
-            <div class="event-list stagger-container">
-                <div class="event-card stagger-item">
-                    <div class="event-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
-                    <div class="event-info">
-                        <h3>VLSI & Embedded Systems Bootcamp</h3>
-                        <p class="text-muted">RGIT Seminar Hall • Active Semesters</p>
+                <div class="footer-col">
+                    <h4 class="footer-title">Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
+                        <a href="https://www.instagram.com/ieeergit/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
+                        <a href="#" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                        <a href="#" class="social-icon" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
                     </div>
-                    <div class="event-status">Ongoing</div>
                 </div>
-                <div class="event-card stagger-item">
-                    <div class="event-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
-                    <div class="event-info">
-                        <h3>Annual Technical Paper Presentation</h3>
-                        <p class="text-muted">Main Auditorium • Upcoming</p>
+                <div class="footer-col footer-col-location">
+                    <h4 class="footer-title">LOCATION</h4>
+                    <div class="location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <span>MCT's Rajiv Gandhi Institute<br>of Technology,<br>Versova, Andheri (W),<br>Mumbai 400053</span>
                     </div>
-                    <div class="event-status"><a href="events.html">Register</a></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=MCT%27s+Rajiv+Gandhi+Institute+of+Technology%2C+Versova%2C+Andheri+%28W%29%2C+Mumbai+400053"
+                       class="footer-map-link"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Open MCT's Rajiv Gandhi Institute of Technology on Google Maps">
+                        <iframe
+                            class="footer-map-iframe"
+                            src="https://maps.google.com/maps?q=MCT%27s+Rajiv+Gandhi+Institute+of+Technology%2C+Versova%2C+Andheri+%28W%29%2C+Mumbai+400053&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Map preview of MCT's Rajiv Gandhi Institute of Technology"
+                            aria-hidden="true"
+                            tabindex="-1"></iframe>
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- TECHNOLOGIES WE WORK WITH -->
-    <section class="section tech-marquee-section" id="technologies">
-        <div class="container">
-            <div class="section-header reveal-up">
-                <h2 class="section-title tech-section-title">Technologies We Work With</h2>
-                <div class="section-line" style="margin: 0 auto 1.5rem auto;"></div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <p>&copy; <span id="year"></span> IEEE-RGIT Student Branch. All rights reserved.</p>
+                </div>
             </div>
-        </div>
+        </footer>
 
-        <!-- Track 1 -->
-        <div class="marquee-wrapper">
-            <div class="marquee-track marquee-track-1" aria-hidden="true">
-                <span class="tech-pill">GNU Radio</span>
-                <span class="tech-pill">MATLAB</span>
-                <span class="tech-pill">ESP-IDF</span>
-                <span class="tech-pill">AWS IoT Core</span>
-                <span class="tech-pill">Docker</span>
-                <span class="tech-pill">PostgreSQL</span>
-                <span class="tech-pill">SciPy/NumPy</span>
-                <span class="tech-pill">Verilog/VHDL</span>
-                <span class="tech-pill">KiCad</span>
-                <span class="tech-pill">FreeRTOS</span>
-                <span class="tech-pill">keil</span>
-                <span class="tech-pill">Proteus Software</span>
-                <span class="tech-pill">Scilab</span>
-                <span class="tech-pill">Arduino uno</span>
-                <span class="tech-pill">Arduino IDE</span>
-                <span class="tech-pill">HFSS</span>
-
-                <span class="tech-pill">GNU Radio</span>
-                <span class="tech-pill">MATLAB</span>
-                <span class="tech-pill">ESP-IDF</span>
-                <span class="tech-pill">AWS IoT Core</span>
-                <span class="tech-pill">Docker</span>
-                <span class="tech-pill">PostgreSQL</span>
-                <span class="tech-pill">SciPy/NumPy</span>
-                <span class="tech-pill">Verilog/VHDL</span>
-                <span class="tech-pill">KiCad</span>
-                <span class="tech-pill">FreeRTOS</span>
-                <span class="tech-pill">keil</span>
-                <span class="tech-pill">Proteus Software</span>
-                <span class="tech-pill">Scilab</span>
-                <span class="tech-pill">Arduino uno</span>
-                <span class="tech-pill">Arduino IDE</span>
-                <span class="tech-pill">HFSS</span>
-            </div>
-        </div>
-
-        <!-- Track 2 -->
-        <div class="marquee-wrapper">
-            <div class="marquee-track marquee-track-2" aria-hidden="true">
-                <span class="tech-pill">GNU Radio</span>
-                <span class="tech-pill">MATLAB</span>
-                <span class="tech-pill">ESP-IDF</span>
-                <span class="tech-pill">AWS IoT Core</span>
-                <span class="tech-pill">Docker</span>
-                <span class="tech-pill">PostgreSQL</span>
-                <span class="tech-pill">SciPy/NumPy</span>
-                <span class="tech-pill">Verilog/VHDL</span>
-                <span class="tech-pill">KiCad</span>
-                <span class="tech-pill">FreeRTOS</span>
-                <span class="tech-pill">keil</span>
-                <span class="tech-pill">Proteus Software</span>
-                <span class="tech-pill">Scilab</span>
-                <span class="tech-pill">Arduino uno</span>
-                <span class="tech-pill">Arduino IDE</span>
-                <span class="tech-pill">HFSS</span>
-
-                <span class="tech-pill">GNU Radio</span>
-                <span class="tech-pill">MATLAB</span>
-                <span class="tech-pill">ESP-IDF</span>
-                <span class="tech-pill">AWS IoT Core</span>
-                <span class="tech-pill">Docker</span>
-                <span class="tech-pill">PostgreSQL</span>
-                <span class="tech-pill">SciPy/NumPy</span>
-                <span class="tech-pill">Verilog/VHDL</span>
-                <span class="tech-pill">KiCad</span>
-                <span class="tech-pill">FreeRTOS</span>
-                <span class="tech-pill">keil</span>
-                <span class="tech-pill">Proteus Software</span>
-                <span class="tech-pill">Scilab</span>
-                <span class="tech-pill">Arduino uno</span>
-                <span class="tech-pill">Arduino IDE</span>
-                <span class="tech-pill">HFSS</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- SIGNAL MATCH SECTION -->
-    <section class="section signal-match-section" id="signal-match">
-        <div class="container">
-            <div class="section-header reveal-up">
-                <h2 class="section-title">Play Signal Match</h2>
-                <p class="section-subtitle">Take a quick break and test your signal recognition skills.</p>
-            </div>
-            <div class="game-launch-wrapper reveal-up">
-                <button id="launchMatchBtn" class="hover-cta" aria-label="Play Now">
-                    <span class="hover-cta-text">
-                        Play Now
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                        </svg>
-                    </span>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- GALLERY SECTION -->
-    <section class="section" id="gallery">
-        <div class="container">
-            <div class="section-header reveal-up">
-                <h2 class="section-title">Gallery</h2>
-                <p class="section-subtitle">Snapshots from our workshops, technical sessions, and campus events.</p>
-            </div>
-            <div class="gallery-grid stagger-container" id="gallery-grid">
-                <!-- Images will be injected by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- LIGHTBOX -->
-    <div id="lightbox" class="lightbox">
-        <span class="lightbox-close">&times;</span>
-        <div class="lightbox-content">
-            <img id="lightbox-image" src="" alt="Gallery Image" style="max-width: 100%; max-height: 70vh; border-radius: 8px;">
-            <p id="lightbox-caption" style="margin-top: 1rem;"></p>
-        </div>
     </div>
-
-    <!-- SIGNAL MATCH MODAL -->
-    <div id="signalMatchModal" class="signal-match-modal-overlay">
-        <div class="signal-match-modal-backdrop"></div>
-        <div class="signal-match-modal-window">
-            <button class="signal-match-modal-close" id="closeSignalMatchModal" aria-label="Close game">×</button>
-            <div class="signal-match-modal-body">
-                <iframe id="signalMatchIframe" src="games/signal-match.html" title="Signal Match"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container footer-grid">
-            <div class="footer-col">
-                <div class="footer-brand">
-                    <div class="brand-icon"><img src="assets/Recruitment Poster.png" alt="IEEE-RGIT Logo" style="filter: brightness(0) invert(1); height: 32px;"></div>
-                    <span class="brand-title">IEEE-RGIT</span>
-                </div>
-                <p class="footer-desc">Rajiv Gandhi Institute of Technology Student Branch dedicated to fostering technical innovation and engineering excellence.</p>
-                <div class="footer-highlight">IEEE-RGIT Student Run Program for VLSI and Embedded Systems</div>
-            </div>
-            <div class="footer-col">
-                <h4 class="footer-title">Quick Links</h4>
-                <ul class="footer-links">
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="events.html">Events</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="team.html">Team</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4 class="footer-title">Connect With Us</h4>
-                <div class="social-icons">
-                    <a href="#" class="social-icon" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
-                    <a href="https://www.instagram.com/ieeergit/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
-                    <a href="#" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-                    <a href="#" class="social-icon" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-                </div>
-            </div>
-            <div class="footer-col footer-col-location">
-                <h4 class="footer-title">LOCATION</h4>
-                <div class="location">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    <span>MCT's Rajiv Gandhi Institute<br>of Technology,<br>Versova, Andheri (W),<br>Mumbai 400053</span>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=MCT%27s+Rajiv+Gandhi+Institute+of+Technology%2C+Versova%2C+Andheri+%28W%29%2C+Mumbai+400053"
-                   class="footer-map-link"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   aria-label="Open MCT's Rajiv Gandhi Institute of Technology on Google Maps">
-                    <iframe
-                        class="footer-map-iframe"
-                        src="https://maps.google.com/maps?q=MCT%27s+Rajiv+Gandhi+Institute+of+Technology%2C+Versova%2C+Andheri+%28W%29%2C+Mumbai+400053&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="Map preview of MCT's Rajiv Gandhi Institute of Technology"
-                        aria-hidden="true"
-                        tabindex="-1"></iframe>
-                </a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <p>&copy; <span id="year"></span> IEEE-RGIT Student Branch. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
     <script src="js/animation.js"></script>
     <script src="js/main.js"></script>
