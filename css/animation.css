@@ -1,9 +1,21 @@
 /* ==================================================
-   PRELOADER — Pure CSS 3-ring atom animation
+   PRELOADER — Video only
+   ---------------------------------------------------
+   • Single full-viewport overlay (#0B1021).
+   • One <video> element fills the overlay.
+   • No SVG, no logo, no text, no dots, no orbits,
+     no pseudo-elements, no fallback visuals.
+   • Normal page background is untouched.
    ================================================== */
+
+/* ---------- Overlay ---------- */
 .preloader-overlay {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;    /* fallback */
+    height: 100dvh;   /* modern mobile-safe viewport */
     z-index: 9999;
     margin: 0;
     padding: 0;
@@ -14,305 +26,64 @@
     box-sizing: border-box;
     background-color: #0B1021;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 26px;
     opacity: 1;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: opacity;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
 }
 
-.preloader-stage {
-    position: relative;
-    width: 220px;
-    height: 220px;
-    flex-shrink: 0;
-    transform: translateZ(0);
-    will-change: transform;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-.preloader-ring {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 156px;
-    height: 52px;
-    margin: -26px 0 0 -78px;
-    border: 1.5px solid rgba(56, 189, 248, 0.55);
-    border-radius: 50%;
-    box-sizing: border-box;
-    transform-origin: 50% 50%;
-    transform: translateZ(0) rotate(0deg);
-    will-change: transform;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    animation-duration: var(--preloader-duration, 4000ms);
-    animation-timing-function: linear;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-}
-
-.preloader-ring-1 { animation-name: preloader-spin-1; }
-.preloader-ring-2 { animation-name: preloader-spin-2; }
-.preloader-ring-3 { animation-name: preloader-spin-3; }
-
-@keyframes preloader-spin-1 {
-    from { transform: translateZ(0) rotate(0deg); }
-    to   { transform: translateZ(0) rotate(360deg); }
-}
-@keyframes preloader-spin-2 {
-    from { transform: translateZ(0) rotate(60deg); }
-    to   { transform: translateZ(0) rotate(420deg); }
-}
-@keyframes preloader-spin-3 {
-    from { transform: translateZ(0) rotate(120deg); }
-    to   { transform: translateZ(0) rotate(480deg); }
-}
-
-.preloader-ring::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: -4px;
-    width: 8px;
-    height: 8px;
-    margin-top: -4px;
-    border-radius: 50%;
-    background: #38bdf8;
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.85);
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-.preloader-core {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 14px;
-    height: 14px;
-    margin: -7px 0 0 -7px;
-    border-radius: 50%;
-    background: #ffffff;
-    box-shadow: 0 0 20px rgba(56, 189, 248, 0.9);
-    transform: translateZ(0);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    animation: preloader-core-pulse 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes preloader-core-pulse {
-    0%, 100% { transform: translateZ(0) scale(0.75); opacity: 0.7; }
-    50%      { transform: translateZ(0) scale(1.15); opacity: 1; }
-}
-
-.preloader-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-    transform: translateZ(0);
-}
-
-.preloader-brand {
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: 0.35em;
-    color: #ffffff;
-    padding-left: 0.35em;
-    line-height: 1.2;
-    text-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+.preloader-overlay.fade-out {
     opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.preloader-brand.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.preloader-tagline {
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.45em;
-    color: rgba(255, 255, 255, 0.6);
-    padding-left: 0.45em;
-    line-height: 1.4;
-    opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.preloader-tagline.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.main-content {
-    position: relative;
-    z-index: 1;
-    opacity: 0;
-}
-
-@media (max-width: 480px) {
-    .preloader-stage { width: 180px; height: 180px; }
-    .preloader-ring {
-        width: 128px;
-        height: 42px;
-        margin: -21px 0 0 -64px;
-    }
-    .preloader-ring::after {
-        width: 7px;
-        height: 7px;
-        margin-top: -3.5px;
-        right: -3.5px;
-    }
-    .preloader-brand { font-size: 1.2rem; }
-    .preloader-tagline { font-size: 0.6rem; }
-}
-
-@media (max-height: 560px) {
-    .preloader-stage { width: 150px; height: 150px; }
-    .preloader-ring {
-        width: 106px;
-        height: 34px;
-        margin: -17px 0 0 -53px;
-    }
-    .preloader-overlay { gap: 16px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .preloader-ring,
-    .preloader-core { animation: none !important; }
-    .preloader-brand,
-    .preloader-tagline { transition: none !important; }
-}
-
-/* ==================================================
-   MOBILE HAMBURGER → X ANIMATION
-   ---------------------------------------------------
-   Uses the existing .active class on #mobile-menu.
-   The :has() selector lets the parent navbar react
-   to the menu's state, so no additional JS is needed.
-   ================================================== */
-
-.hamburger-icon {
-    width: 24px;
-    height: 24px;
-    display: block;
-    overflow: visible;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-.hamburger-line {
-    transform-box: view-box;
-    transform-origin: 12px 12px;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-.navbar:has(#mobile-menu.active) .hamburger-line-top {
-    transform: translateZ(0) translateY(5px) rotate(45deg);
-}
-.navbar:has(#mobile-menu.active) .hamburger-line-bot {
-    transform: translateZ(0) translateY(-5px) rotate(-45deg);
-}
-.navbar:has(#mobile-menu.active) .hamburger-line-mid {
-    opacity: 0;
-}
-
-/* ==================================================
-   MOBILE MENU — SLIDE + FADE
-   ---------------------------------------------------
-   Replaces the old display:none / display:flex toggle
-   with an always-rendered, absolutely positioned panel
-   that fades and slides. Position:absolute avoids any
-   layout reflow (no height/width animation).
-   ================================================== */
-
-.mobile-menu {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateZ(0) translateY(-10px);
     pointer-events: none;
-    background: var(--glass-nav-bg);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid var(--glass-nav-border);
-    box-shadow: var(--glass-nav-shadow);
-    padding: 1rem 5%;
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                visibility 0s linear 0.3s;
 }
 
-.mobile-menu.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateZ(0) translateY(0);
-    pointer-events: auto;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                visibility 0s;
+/* ---------- Video (the ONLY preloader visual) ---------- */
+.preloader-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+    background-color: #0B1021;
+    pointer-events: none;
 }
 
 /* ==================================================
-   MOBILE MENU LINKS — SUBTLE STAGGER
+   SCROLL LOCK WHILE PRELOADER IS ACTIVE
+   ---------------------------------------------------
+   Prevents the underlying page from showing a
+   scrollbar / gutter behind the fixed overlay.
+   Removed automatically once the preloader is done.
    ================================================== */
-
-.mobile-link {
-    opacity: 0;
-    transform: translateZ(0) translateY(-6px);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-                color 0.25s ease;
+html.preloader-active,
+html.preloader-active body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
-
-.mobile-menu.active .mobile-link {
-    opacity: 1;
-    transform: translateZ(0) translateY(0);
-}
-
-.mobile-menu.active .mobile-link:nth-child(1) { transition-delay: 0.05s; }
-.mobile-menu.active .mobile-link:nth-child(2) { transition-delay: 0.09s; }
-.mobile-menu.active .mobile-link:nth-child(3) { transition-delay: 0.13s; }
-.mobile-menu.active .mobile-link:nth-child(4) { transition-delay: 0.17s; }
-.mobile-menu.active .mobile-link:nth-child(5) { transition-delay: 0.21s; }
 
 /* ==================================================
-   REDUCED MOTION — hamburger & menu
-   ================================================== */
+   RESPONSIVE
+================================================== */
+@media (max-width: 480px) {
+    /* Video already uses object-fit: contain, so it
+       scales down naturally. No additional rules
+       required — kept here only for future needs. */
+}
+
+/* ==================================================
+   REDUCED MOTION
+================================================== */
 @media (prefers-reduced-motion: reduce) {
-    .hamburger-line,
-    .mobile-menu,
-    .mobile-link {
-        transition-duration: 0.001ms !important;
-        transition-delay: 0s !important;
-    }
+    .preloader-overlay { transition: opacity 0.3s ease; }
 }
