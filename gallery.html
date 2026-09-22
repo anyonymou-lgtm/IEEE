@@ -134,6 +134,27 @@
                 transform: none;
             }
         }
+
+        .gallery-page .lightbox-content {
+            touch-action: pan-y;
+        }
+        .gallery-page .lightbox-content img {
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-user-drag: none;
+        }
+        .gallery-page .lightbox-content img.lb-switch {
+            animation: lbSwitch 0.22s ease;
+        }
+        @keyframes lbSwitch {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .gallery-page .lightbox-content img.lb-switch {
+                animation: none;
+            }
+        }
     </style>
 </head>
 <body class="gallery-page">
@@ -364,21 +385,60 @@
             const filtersContainer = document.getElementById('gallery-filters');
             const gridContainer = document.getElementById('gallery-grid-full');
             const lightbox = document.getElementById('lightbox');
+            const lightboxContent = document.querySelector('.lightbox-content');
             const lightboxImg = document.getElementById('lightbox-image');
             const lightboxCaption = document.getElementById('lightbox-caption');
             const lightboxClose = document.querySelector('.lightbox-close');
 
             if (!filtersContainer || !gridContainer) return;
 
+            let currentImages = [];
+            let currentIndex = 0;
+
             function fileName(path) {
                 return path.split('/').pop();
             }
 
+            function showImageAt(index) {
+                if (!currentImages.length) return;
+
+                const total = currentImages.length;
+                currentIndex = ((index % total) + total) % total;
+
+                const src = currentImages[currentIndex];
+                lightboxImg.src = src;
+                lightboxCaption.textContent = fileName(src);
+
+                lightboxImg.classList.remove('lb-switch');
+                void lightboxImg.offsetWidth;
+                lightboxImg.classList.add('lb-switch');
+            }
+
+            function openLightbox(src) {
+                const idx = currentImages.indexOf(src);
+                currentIndex = idx >= 0 ? idx : 0;
+                showImageAt(currentIndex);
+                lightbox.classList.add('active');
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+            }
+
+            function nextImage() {
+                showImageAt(currentIndex + 1);
+            }
+
+            function prevImage() {
+                showImageAt(currentIndex - 1);
+            }
+
             function renderGallery(category) {
-                const images = galleryCategories[category] || [];
+                currentImages = (galleryCategories[category] || []).slice();
+                currentIndex = 0;
                 gridContainer.innerHTML = '';
 
-                images.forEach(function (src) {
+                currentImages.forEach(function (src) {
                     const item = document.createElement('div');
                     item.classList.add('gallery-item');
 
@@ -389,10 +449,7 @@
                     item.appendChild(img);
 
                     item.addEventListener('click', function () {
-                        if (!lightbox || !lightboxImg || !lightboxCaption) return;
-                        lightboxImg.src = src;
-                        lightboxCaption.textContent = fileName(src);
-                        lightbox.classList.add('active');
+                        openLightbox(src);
                     });
 
                     gridContainer.appendChild(item);
@@ -424,20 +481,76 @@
             }
 
             if (lightboxClose && lightbox) {
-                lightboxClose.addEventListener('click', function () {
-                    lightbox.classList.remove('active');
-                });
+                lightboxClose.addEventListener('click', closeLightbox);
+
                 lightbox.addEventListener('click', function (e) {
                     if (e.target === lightbox) {
-                        lightbox.classList.remove('active');
+                        closeLightbox();
                     }
                 });
             }
+
             document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
-                    lightbox.classList.remove('active');
+                if (!lightbox || !lightbox.classList.contains('active')) return;
+
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    nextImage();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    prevImage();
                 }
             });
+
+            (function () {
+                if (!lightboxContent || !lightbox) return;
+
+                const SWIPE_THRESHOLD = 30;
+                const SWIPE_MAX_TIME = 800;
+
+                let startX = 0;
+                let startY = 0;
+                let startTime = 0;
+                let tracking = false;
+
+                lightboxContent.addEventListener('touchstart', function (e) {
+                    if (e.touches.length !== 1) return;
+                    if (e.target.closest('.lightbox-close')) return;
+
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                    startTime = Date.now();
+                    tracking = true;
+                }, { passive: true });
+
+                lightboxContent.addEventListener('touchend', function (e) {
+                    if (!tracking) return;
+                    tracking = false;
+
+                    if (!lightbox.classList.contains('active')) return;
+                    if (!e.changedTouches.length) return;
+
+                    const dx = e.changedTouches[0].clientX - startX;
+                    const dy = e.changedTouches[0].clientY - startY;
+                    const dt = Date.now() - startTime;
+
+                    if (dt > SWIPE_MAX_TIME) return;
+                    if (Math.abs(dx) < Math.abs(dy)) return;
+                    if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+
+                    if (dx < 0) {
+                        nextImage();
+                    } else {
+                        prevImage();
+                    }
+                }, { passive: true });
+
+                lightboxContent.addEventListener('touchcancel', function () {
+                    tracking = false;
+                }, { passive: true });
+            })();
 
             buildFilters();
             renderGallery('All');
