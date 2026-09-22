@@ -136,9 +136,6 @@
 
 /* ==================================================
    SIGNAL MATCH MODAL — RESPONSIVE WINDOW SIZING
-   ---------------------------------------------------
-   Wide landscape game window on desktop.
-   Compact panel that fits the phone viewport on mobile.
 ================================================== */
 
 /* ---------- Tablet / small laptop ---------- */
@@ -213,8 +210,6 @@
 
 /* ==================================================
    RESPONSIVE — EVENTS PAGE
-   ---------------------------------------------------
-   Base event-detail responsive rules (all events).
 ================================================== */
 
 @media (max-width: 900px) {
@@ -442,22 +437,12 @@
 
 /* ==================================================
    EVENTS PAGE — MOBILE OVERFLOW / LAYOUT FIX
-   ---------------------------------------------------
-   Root-cause correction for horizontal page overflow
-   on phones. Prevents any container, grid, or flex
-   child from pushing the page wider than the viewport.
+================================================== */
 
-   Covers ALL events (Sahyadri, LaTeX, Adani, TechForge).
-
-   Desktop (>= 901px) is COMPLETELY untouched.
-   ================================================== */
-
-/* ---------- Universal safety net inside the Events page ---------- */
 .events-page {
     overflow-x: hidden;
 }
 
-/* ---------- Every layout container inside an event detail ---------- */
 .events-page .event-detail,
 .events-page .event-block,
 .events-page .event-flagship,
@@ -476,7 +461,6 @@
     box-sizing: border-box;
 }
 
-/* ---------- Every grid/flex child chain inside an event detail ---------- */
 .events-page .event-meta-grid,
 .events-page .event-meta-item,
 .events-page .event-meta-text,
@@ -508,7 +492,6 @@
     box-sizing: border-box;
 }
 
-/* ---------- Long unbreakable strings wrap everywhere inside event details ---------- */
 .events-page .event-detail,
 .events-page .event-detail p,
 .events-page .event-detail li,
@@ -537,11 +520,7 @@
     word-break: break-word;
 }
 
-/* ===============================================
-   Tablet & small laptop
-   =============================================== */
 @media (max-width: 900px) {
-    /* Container gets safe side padding */
     .events-page .container {
         width: 100%;
         max-width: 100%;
@@ -550,7 +529,6 @@
         box-sizing: border-box;
     }
 
-    /* Back button wrapper aligned with container */
     .events-page .event-detail .event-detail-back-wrap {
         width: 100%;
         max-width: 100%;
@@ -560,7 +538,6 @@
         margin-bottom: 1rem;
     }
 
-    /* Multi-column sections collapse to single column */
     .events-page .event-meta-grid,
     .events-page .explore-grid,
     .events-page .flagship-meta,
@@ -568,12 +545,10 @@
         grid-template-columns: 1fr;
     }
 
-    /* Stat row: two per row on tablets */
     .events-page .stat-row {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    /* Bullet list items: icon + text, icon fixed size */
     .events-page .flagship-section .bullet-list li,
     .events-page .accomplishments-list li {
         display: grid;
@@ -592,7 +567,6 @@
         margin-top: 4px;
     }
 
-    /* Meta items: icon fixed size, text can shrink */
     .events-page .event-meta-item {
         display: flex;
         align-items: flex-start;
@@ -613,11 +587,7 @@
     }
 }
 
-/* ===============================================
-   Phone sizes
-   =============================================== */
 @media (max-width: 640px) {
-    /* Container side padding is comfortable on phones */
     .events-page .container {
         padding-left: 16px;
         padding-right: 16px;
@@ -628,7 +598,6 @@
         padding-right: 16px;
     }
 
-    /* Event cards don't get extra outer padding */
     .events-page .events-cards-grid {
         gap: 1rem;
     }
@@ -643,7 +612,6 @@
         border-radius: 14px;
     }
 
-    /* Flagship card padding tuned for phones */
     .events-page .flagship-header {
         padding: 3rem 1rem 1.25rem 1rem;
     }
@@ -658,7 +626,6 @@
         padding: 1rem;
     }
 
-    /* Section headers */
     .events-page .flagship-title {
         font-size: 1.55rem;
     }
@@ -667,7 +634,6 @@
         font-size: 1.08rem;
     }
 
-    /* Tables always scroll internally — never push the page */
     .events-page .table-wrapper {
         width: 100%;
         max-width: 100%;
@@ -679,7 +645,6 @@
         min-width: 420px;
     }
 
-    /* Tighten stat boxes */
     .events-page .stat-row {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.55rem;
@@ -697,7 +662,6 @@
         font-size: 0.65rem;
     }
 
-    /* Tighten timeline items */
     .events-page .timeline-item {
         grid-template-columns: 1fr;
         gap: 0.3rem;
@@ -708,9 +672,6 @@
     }
 }
 
-/* ===============================================
-   Very narrow phones (390px and below)
-   =============================================== */
 @media (max-width: 430px) {
     .events-page .container {
         padding-left: 16px;
@@ -752,7 +713,6 @@
         min-width: 380px;
     }
 
-    /* Keep 2 stat boxes per row but reduce padding */
     .events-page .stat-box {
         padding: 0.65rem 0.5rem;
     }
@@ -762,9 +722,6 @@
     }
 }
 
-/* ===============================================
-   Smallest phones (360px and below)
-   =============================================== */
 @media (max-width: 360px) {
     .events-page .container {
         padding-left: 14px;
@@ -790,5 +747,14 @@
 
     .events-page .data-table {
         min-width: 340px;
+    }
+}
+
+/* ==================================================
+   GALLERY PAGE — COMPACT TOP SPACING ON MOBILE
+================================================== */
+@media (max-width: 768px) {
+    .gallery-page .section {
+        padding: 20px 0 60px 0;
     }
 }
