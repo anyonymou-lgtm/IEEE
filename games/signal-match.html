@@ -413,7 +413,7 @@
 
     .options {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: 10px;
     }
 
@@ -423,7 +423,7 @@
         background: linear-gradient(145deg, #101a2b, #0c1422);
         color: var(--text);
         border-radius: 13px;
-        padding: 16px 12px;
+        padding: 16px 8px;
         cursor: pointer;
         font: inherit;
         transition:
@@ -672,14 +672,6 @@
         }
     }
 
-    /* ============================================================
-       RESPONSIVE — COMPACT LAYOUT FOR SMALL VIEWPORTS
-       ------------------------------------------------------------
-       Only resizes and reflows existing components. No gameplay,
-       content, or JS changes.
-       ============================================================ */
-
-    /* ---------- SHORT VIEWPORT: fits shorter laptop windows ---------- */
     @media (max-height: 750px) {
         .app {
             width: min(960px, calc(100% - 24px));
@@ -723,7 +715,7 @@
         .question p { font-size: 11px; margin-top: 4px; }
 
         .options { gap: 8px; }
-        .option { min-height: 60px; padding: 11px 9px; border-radius: 11px; }
+        .option { min-height: 60px; padding: 11px 6px; border-radius: 11px; }
         .option .icon { font-size: 15px; margin-bottom: 3px; }
         .option .name { font-size: 11px; }
         .option .desc { font-size: 8px; margin-top: 2px; }
@@ -740,7 +732,6 @@
         .restart { padding: 12px; font-size: 11px; }
     }
 
-    /* ---------- VERY SHORT VIEWPORT (small laptop / landscape phone) ---------- */
     @media (max-height: 600px) {
         .app {
             padding: 10px 0 12px;
@@ -781,7 +772,7 @@
         .question p { font-size: 9px; margin-top: 3px; }
 
         .options { gap: 6px; }
-        .option { min-height: 48px; padding: 8px 6px; border-radius: 9px; }
+        .option { min-height: 48px; padding: 8px 5px; border-radius: 9px; }
         .option .icon { font-size: 13px; margin-bottom: 2px; }
         .option .name { font-size: 10px; }
         .option .desc { display: none; }
@@ -790,7 +781,6 @@
         kbd { padding: 1px 3px; font-size: 8px; }
     }
 
-    /* ---------- MOBILE (narrow width) ---------- */
     @media (max-width: 620px) {
         .app {
             width: 100%;
@@ -809,7 +799,6 @@
         .leaderboard-title { font-size: 9px; }
         .leaderboard-tag { font-size: 7px; padding: 3px 6px; }
 
-        /* Keep 3 columns so the leaderboard does not become a tall column */
         .players { grid-template-columns: repeat(3, 1fr); gap: 5px; }
         .player { padding: 6px 7px; gap: 5px; border-radius: 8px; flex-direction: column; align-items: flex-start; }
         .rank { font-size: 8px; width: auto; }
@@ -835,9 +824,8 @@
         .question h2 { font-size: 16px; }
         .question p { font-size: 10px; margin-top: 4px; }
 
-        /* Keep options in a 3-column grid — compact and short */
         .options { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-        .option { min-height: 52px; padding: 9px 6px; border-radius: 10px; }
+        .option { min-height: 52px; padding: 9px 5px; border-radius: 10px; }
         .option .icon { font-size: 14px; margin-bottom: 2px; }
         .option .name { font-size: 10px; letter-spacing: .3px; }
         .option .desc { display: none; }
@@ -854,14 +842,13 @@
         .restart { padding: 11px; font-size: 11px; }
     }
 
-    /* ---------- VERY NARROW PHONES ---------- */
     @media (max-width: 380px) {
         .stats { gap: 5px; }
         .stat { padding: 7px 8px; }
         .stat-label { font-size: 7px; }
         .stat-value { font-size: 14px; }
         .wave-container { height: 135px; }
-        .option { min-height: 48px; padding: 8px 5px; }
+        .option { min-height: 48px; padding: 8px 4px; }
         .option .icon { font-size: 13px; }
         .option .name { font-size: 9px; }
         .question h2 { font-size: 15px; }
@@ -872,8 +859,6 @@
 <body>
 
 <div class="app">
-
-    <!-- HEADER -->
 
     <header>
 
@@ -903,8 +888,6 @@
 
     </header>
 
-
-    <!-- STATIC LEADERBOARD -->
 
     <section class="leaderboard">
 
@@ -980,8 +963,6 @@
     </section>
 
 
-    <!-- GAME STATS -->
-
     <div class="stats">
 
         <div class="stat">
@@ -1002,14 +983,10 @@
     </div>
 
 
-    <!-- TIMER -->
-
     <div class="timer-track">
         <div class="timer-bar" id="timerBar"></div>
     </div>
 
-
-    <!-- SIGNAL -->
 
     <main class="signal-card" id="signalCard">
 
@@ -1054,8 +1031,6 @@
     </main>
 
 
-    <!-- QUESTION -->
-
     <div class="question">
 
         <h2>
@@ -1069,8 +1044,6 @@
     </div>
 
 
-    <!-- OPTIONS -->
-
     <div class="options" id="options"></div>
 
 
@@ -1082,12 +1055,15 @@
         <kbd>3</kbd>
         <kbd>4</kbd>
         <kbd>5</kbd>
+        <kbd>6</kbd>
+        <kbd>7</kbd>
+        <kbd>8</kbd>
+        <kbd>9</kbd>
+        <kbd>0</kbd>
     </div>
 
 </div>
 
-
-<!-- GAME OVER -->
 
 <div class="overlay hidden" id="gameOver">
 
@@ -1138,15 +1114,6 @@
 
 
 <script>
-
-/* ============================================================
-   SIGNAL MATCH
-   ============================================================ */
-
-
-/* ------------------------------
-   DOM
-   ------------------------------ */
 
 const canvas =
     document.getElementById("waveCanvas");
@@ -1206,10 +1173,6 @@ const restartBtn =
     document.getElementById("restart");
 
 
-/* ------------------------------
-   Modulations
-   ------------------------------ */
-
 const MODULATIONS = [
 
     {
@@ -1229,19 +1192,43 @@ const MODULATIONS = [
     },
 
     {
-        id: "PSK",
-        name: "PSK",
-        full: "Phase Shift Keying",
-        icon: "◈",
-        description: "Phase changes"
+        id: "PM",
+        name: "PM",
+        full: "Phase Modulation",
+        icon: "∿",
+        description: "Phase varies"
+    },
+
+    {
+        id: "ASK",
+        name: "ASK",
+        full: "Amplitude Shift Keying",
+        icon: "⌐",
+        description: "Amplitude on/off"
     },
 
     {
         id: "FSK",
         name: "FSK",
         full: "Frequency Shift Keying",
-        icon: "≋",
-        description: "Binary frequency"
+        icon: "≈",
+        description: "Two frequencies"
+    },
+
+    {
+        id: "PSK",
+        name: "PSK",
+        full: "Phase Shift Keying",
+        icon: "◈",
+        description: "Binary phase"
+    },
+
+    {
+        id: "QPSK",
+        name: "QPSK",
+        full: "Quadrature Phase Shift",
+        icon: "◇",
+        description: "Four phase states"
     },
 
     {
@@ -1250,14 +1237,26 @@ const MODULATIONS = [
         full: "Quadrature Amplitude",
         icon: "✦",
         description: "Amplitude + phase"
+    },
+
+    {
+        id: "PWM",
+        name: "PWM",
+        full: "Pulse Width Modulation",
+        icon: "⊓",
+        description: "Duty cycle varies"
+    },
+
+    {
+        id: "PCM",
+        name: "PCM",
+        full: "Pulse Code Modulation",
+        icon: "▤",
+        description: "Quantized levels"
     }
 
 ];
 
-
-/* ------------------------------
-   Failure messages
-   ------------------------------ */
 
 const FAILURE_MESSAGES = [
 
@@ -1306,10 +1305,6 @@ const FAILURE_MESSAGES = [
 ];
 
 
-/* ------------------------------
-   Game state
-   ------------------------------ */
-
 let score = 0;
 
 let round = 1;
@@ -1337,28 +1332,24 @@ highScoreEl.textContent =
     highScore;
 
 
-/* ------------------------------
-   Difficulty
-   ------------------------------ */
-
 function getDifficulty() {
 
     if (round <= 2) {
         return MODULATIONS.slice(0, 3);
     }
 
-    if (round <= 5) {
-        return MODULATIONS.slice(0, 4);
+    if (round <= 4) {
+        return MODULATIONS.slice(0, 5);
+    }
+
+    if (round <= 7) {
+        return MODULATIONS.slice(0, 7);
     }
 
     return MODULATIONS;
 
 }
 
-
-/* ------------------------------
-   Timer difficulty
-   ------------------------------ */
 
 function getTimeLimit() {
 
@@ -1369,10 +1360,6 @@ function getTimeLimit() {
 
 }
 
-
-/* ------------------------------
-   Random helpers
-   ------------------------------ */
 
 function random(min, max) {
 
@@ -1403,10 +1390,6 @@ function choose(array) {
 }
 
 
-/* ------------------------------
-   Generate signal
-   ------------------------------ */
-
 function generateSignal() {
 
     const available =
@@ -1416,8 +1399,9 @@ function generateSignal() {
         choose(available);
 
     const carrier =
-        currentSignal.id === "FM" ||
-        currentSignal.id === "FSK"
+        (currentSignal.id === "FM" ||
+         currentSignal.id === "FSK" ||
+         currentSignal.id === "QAM")
             ? randomInt(80, 180)
             : randomInt(90, 160);
 
@@ -1434,11 +1418,21 @@ function generateSignal() {
 
         FM: randomInt(30, 90),
 
-        PSK: randomInt(10, 40),
+        PM: randomInt(20, 60),
+
+        ASK: randomInt(8, 25),
 
         FSK: randomInt(12, 50),
 
-        QAM: randomInt(20, 80)
+        PSK: randomInt(10, 40),
+
+        QPSK: randomInt(15, 55),
+
+        QAM: randomInt(20, 80),
+
+        PWM: randomInt(5, 20),
+
+        PCM: randomInt(30, 90)
 
     }[currentSignal.id];
 
@@ -1457,10 +1451,6 @@ function generateSignal() {
 
 }
 
-
-/* ------------------------------
-   Render options
-   ------------------------------ */
 
 function renderOptions() {
 
@@ -1500,7 +1490,7 @@ function renderOptions() {
                 </span>
 
                 <span class="desc">
-                    ${mod.full}
+                    ${mod.description}
                 </span>
 
             `;
@@ -1528,10 +1518,6 @@ function renderOptions() {
 
 }
 
-
-/* ------------------------------
-   Answer
-   ------------------------------ */
 
 function answer(
     selected,
@@ -1637,10 +1623,6 @@ function answer(
 
 }
 
-
-/* ------------------------------
-   Timer
-   ------------------------------ */
 
 function startTimer() {
 
@@ -1782,10 +1764,6 @@ function updateTimer() {
 }
 
 
-/* ------------------------------
-   Next round
-   ------------------------------ */
-
 function nextRound() {
 
     signalCard.classList.remove(
@@ -1804,10 +1782,6 @@ function nextRound() {
 
 }
 
-
-/* ------------------------------
-   Game over
-   ------------------------------ */
 
 function endGame(reason) {
 
@@ -1886,10 +1860,6 @@ function endGame(reason) {
 }
 
 
-/* ------------------------------
-   Restart
-   ------------------------------ */
-
 restartBtn.addEventListener(
     "click",
     () => {
@@ -1917,10 +1887,6 @@ restartBtn.addEventListener(
     }
 );
 
-
-/* ------------------------------
-   Score animation
-   ------------------------------ */
 
 function createScorePop(
     element
@@ -1962,10 +1928,6 @@ function createScorePop(
 
 }
 
-
-/* ============================================================
-   WAVEFORM ENGINE
-   ============================================================ */
 
 let phase = 0;
 
@@ -2040,8 +2002,6 @@ function drawWaveform() {
         currentSignal.id;
 
 
-    /* Glow */
-
     ctx.save();
 
     ctx.lineWidth = 4;
@@ -2058,8 +2018,6 @@ function drawWaveform() {
     ctx.restore();
 
 
-    /* Main waveform */
-
     ctx.save();
 
     ctx.lineWidth = 1.7;
@@ -2075,8 +2033,6 @@ function drawWaveform() {
 
     ctx.restore();
 
-
-    /* Scan line */
 
     const scanX =
         (
@@ -2136,10 +2092,6 @@ function drawWaveform() {
 }
 
 
-/* ------------------------------
-   Signal drawing
-   ------------------------------ */
-
 function drawSignal(
     type,
     width,
@@ -2179,8 +2131,6 @@ function drawSignal(
             center;
 
 
-        /* AM */
-
         if (
             type === "AM"
         ) {
@@ -2214,8 +2164,6 @@ function drawSignal(
         }
 
 
-        /* FM */
-
         else if (
             type === "FM"
         ) {
@@ -2246,7 +2194,102 @@ function drawSignal(
         }
 
 
-        /* PSK */
+        else if (
+            type === "PM"
+        ) {
+
+            const message =
+                Math.sin(
+                    t *
+                    Math.PI *
+                    4
+                );
+
+
+            y =
+                center +
+                amplitude *
+                .72 *
+                Math.sin(
+                    time * 5 +
+                    message * 2.6
+                );
+
+        }
+
+
+        else if (
+            type === "ASK"
+        ) {
+
+            const symbols =
+                10;
+
+            const symbol =
+                Math.floor(
+                    t * symbols
+                );
+
+            const local =
+                t *
+                symbols -
+                symbol;
+
+            const amp =
+                symbol % 2 === 0
+                    ? 1
+                    : 0.12;
+
+
+            y =
+                center +
+                amplitude *
+                amp *
+                Math.sin(
+                    local *
+                    Math.PI *
+                    2 *
+                    4 +
+                    phase
+                );
+
+        }
+
+
+        else if (
+            type === "FSK"
+        ) {
+
+            const symbols =
+                10;
+
+
+            const symbol =
+                Math.floor(
+                    t * symbols
+                );
+
+
+            const frequency =
+                symbol % 2 === 0
+                    ? 5
+                    : 11;
+
+
+            y =
+                center +
+                amplitude *
+                .72 *
+                Math.sin(
+                    t *
+                    Math.PI *
+                    frequency *
+                    7 +
+                    phase
+                );
+
+        }
+
 
         else if (
             type === "PSK"
@@ -2293,26 +2336,28 @@ function drawSignal(
         }
 
 
-        /* FSK */
-
         else if (
-            type === "FSK"
+            type === "QPSK"
         ) {
 
             const symbols =
-                10;
-
+                8;
 
             const symbol =
                 Math.floor(
                     t * symbols
                 );
 
+            const local =
+                t *
+                symbols -
+                symbol;
 
-            const frequency =
-                symbol % 2 === 0
-                    ? 5
-                    : 11;
+            const phaseShift =
+                (
+                    symbol % 4
+                ) *
+                Math.PI / 2;
 
 
             y =
@@ -2320,47 +2365,49 @@ function drawSignal(
                 amplitude *
                 .72 *
                 Math.sin(
-                    t *
+                    local *
                     Math.PI *
-                    frequency *
-                    7 +
-                    phase
+                    2 *
+                    3 +
+                    phase +
+                    phaseShift
                 );
 
         }
 
-
-        /* QAM */
 
         else if (
             type === "QAM"
         ) {
 
             const symbols =
-                8;
-
+                6;
 
             const symbol =
                 Math.floor(
                     t * symbols
                 );
 
+            const local =
+                t *
+                symbols -
+                symbol;
 
             const amplitudes =
                 [
-                    .35,
-                    .65,
+                    .4,
+                    .7,
                     1,
-                    .5
+                    .55,
+                    .85,
+                    .3
                 ];
-
 
             const amp =
                 amplitudes[
                     symbol %
                     amplitudes.length
                 ];
-
 
             const phaseShift =
                 (
@@ -2374,15 +2421,109 @@ function drawSignal(
                 amplitude *
                 amp *
                 Math.sin(
-                    time * 7 +
+                    local *
+                    Math.PI *
+                    2 *
+                    4 +
+                    phase +
                     phaseShift
                 );
 
         }
 
 
-        y +=
-            noise();
+        else if (
+            type === "PWM"
+        ) {
+
+            const cycles =
+                12;
+
+            const local =
+                (
+                    t * cycles
+                ) % 1;
+
+            const message =
+                Math.sin(
+                    t *
+                    Math.PI *
+                    4
+                );
+
+            const duty =
+                .5 +
+                .35 *
+                message;
+
+            const square =
+                local < duty
+                    ? 1
+                    : -1;
+
+
+            y =
+                center +
+                amplitude *
+                .85 *
+                square;
+
+        }
+
+
+        else if (
+            type === "PCM"
+        ) {
+
+            const samples =
+                16;
+
+            const sampleIdx =
+                Math.floor(
+                    t * samples
+                );
+
+            const levelCount =
+                8;
+
+            const maxLevel =
+                levelCount / 2 - 1;
+
+            const rawValue =
+                Math.sin(
+                    (
+                        sampleIdx /
+                        samples
+                    ) *
+                    Math.PI *
+                    4
+                );
+
+            const quantized =
+                Math.round(
+                    rawValue *
+                    maxLevel
+                ) /
+                maxLevel;
+
+
+            y =
+                center +
+                amplitude *
+                .85 *
+                quantized;
+
+        }
+
+
+        if (
+            type !== "PCM"
+        ) {
+
+            y +=
+                noise();
+
+        }
 
 
         if (
@@ -2423,10 +2564,6 @@ function drawSignal(
 }
 
 
-/* ------------------------------
-   Keyboard controls
-   ------------------------------ */
-
 document.addEventListener(
     "keydown",
     event => {
@@ -2439,13 +2576,31 @@ document.addEventListener(
         }
 
 
-        const number =
-            Number(event.key);
+        const key =
+            event.key;
+
+        let number = -1;
+
+        if (
+            key >= "1" &&
+            key <= "9"
+        ) {
+
+            number =
+                Number(key);
+
+        } else if (
+            key === "0"
+        ) {
+
+            number = 10;
+
+        }
 
 
         if (
             number >= 1 &&
-            number <= 5
+            number <= 10
         ) {
 
             const button =
@@ -2484,10 +2639,6 @@ document.addEventListener(
 );
 
 
-/* ------------------------------
-   Canvas setup
-   ------------------------------ */
-
 window.addEventListener(
     "resize",
     resizeCanvas
@@ -2498,26 +2649,10 @@ resizeCanvas();
 drawWaveform();
 
 
-/* ------------------------------
-   Start
-   ------------------------------ */
-
 generateSignal();
 
 startTimer();
 
-
-/* ============================================================
-   PARENT MODAL INTEGRATION
-   ------------------------------------------------------------
-   Listens for messages from the parent site modal to support
-   the same open/close protocol the old Snake Game used.
-
-   - "startGame": resets round, timer and score, then begins
-     a fresh game. Fires when the modal opens.
-   - "stopGame": cleanly pauses the game so reopening the
-     modal starts fresh instead of resuming mid-countdown.
-   ============================================================ */
 
 window.addEventListener(
     "message",
@@ -2525,7 +2660,6 @@ window.addEventListener(
 
         if (e.data === "startGame") {
 
-            /* Fresh game */
             gameOver.classList.add("hidden");
 
             score = 0;
@@ -2543,7 +2677,6 @@ window.addEventListener(
 
         } else if (e.data === "stopGame") {
 
-            /* Pause the game while the modal is closed */
             clearInterval(timerInterval);
             timerInterval = null;
 
