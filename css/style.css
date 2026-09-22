@@ -112,7 +112,7 @@ html {
     color: var(--text-main);
     background-color: var(--bg-main);
     transition: background-color 0.3s ease, color 0.3s ease;
-    overflow-x: hidden; /* prevents 1px horizontal overflow seam */
+    overflow-x: hidden;
 }
 
 body {
@@ -1570,7 +1570,6 @@ html.dark .events-page .accomplishments {
     min-width: 0;
 }
 
-/* ---------- Accomplishments list item: strict 2-col grid ---------- */
 .events-page .accomplishments-list li {
     display: grid;
     grid-template-columns: 17px minmax(0, 1fr);
@@ -1601,7 +1600,6 @@ html.dark .events-page .accomplishments {
     display: block;
 }
 
-/* ---------- Shared bullet-text wrapper ---------- */
 .events-page .accomplishments-list li .bullet-text,
 .events-page .flagship-section .bullet-list li .bullet-text {
     display: block;
@@ -1705,7 +1703,6 @@ html.dark .events-page .flagship-header { background: rgba(56, 189, 248, 0.06); 
     min-width: 0;
 }
 
-/* ---------- Flagship section title: grid layout prevents overflow ---------- */
 .events-page .flagship-section-title {
     font-size: 1.25rem;
     font-weight: 800;
@@ -1746,7 +1743,6 @@ html.dark .events-page .flagship-header { background: rgba(56, 189, 248, 0.06); 
     max-width: 100%;
 }
 
-/* ---------- Bullet list item: strict 2-col grid ---------- */
 .events-page .flagship-section .bullet-list li {
     display: grid;
     grid-template-columns: 16px minmax(0, 1fr);
@@ -1994,24 +1990,16 @@ html.dark .home-page .marquee-wrapper {
 /* ==================================================
    22. HOMEPAGE + ABOUT — HIDE DECORATIVE
        SECTION-HEADING ACCENT LINES
-   ---------------------------------------------------
-   Removes the small cyan accent line above:
-     • "About IEEE-RGIT"           (homepage #about)
-     • "WHO WE ARE"                (about.html #about-core)
-   And the small cyan accent line below:
-     • "TECHNOLOGIES WE WORK WITH" (homepage #technologies)
-
-   `visibility: hidden` is used instead of `display: none`
-   so the element still occupies its original space. This
-   keeps the heading text position, spacing, alignment and
-   responsive behavior completely unchanged.
-
-   Scoped precisely to the three target sections so that
-   any other `.section-line` elsewhere on the site is
-   completely unaffected.
 ================================================== */
 .home-page #about .section-line,
 .about-page #about-core .section-line,
 .home-page #technologies .section-line {
     visibility: hidden;
+}
+
+/* ==================================================
+   23. GALLERY PAGE — COMPACT TOP SPACING
+================================================== */
+.gallery-page .section {
+    padding: 24px 0 100px 0;
 }
