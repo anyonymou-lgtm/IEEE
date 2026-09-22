@@ -65,6 +65,75 @@
                 gap: 0.75rem;
             }
         }
+
+        .gallery-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 0 auto 1rem auto;
+        }
+        .gallery-filter-btn {
+            appearance: none;
+            -webkit-appearance: none;
+            font-family: inherit;
+            padding: 0.6rem 1.5rem;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            user-select: none;
+            transition:
+                background 0.25s ease,
+                color 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                transform 0.2s ease;
+        }
+        .gallery-filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--text-main);
+        }
+        .gallery-filter-btn:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+        .gallery-filter-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 14px rgba(0, 98, 155, 0.28);
+        }
+        html.dark .gallery-filter-btn.active {
+            color: #0b1120;
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.28);
+        }
+        .gallery-filter-btn:active {
+            transform: translateY(1px);
+        }
+        @media (max-width: 480px) {
+            .gallery-filters {
+                gap: 0.5rem;
+                margin-bottom: 0.75rem;
+            }
+            .gallery-filter-btn {
+                padding: 0.5rem 1.05rem;
+                font-size: 0.68rem;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .gallery-filter-btn {
+                transition: none;
+            }
+            .gallery-filter-btn:active {
+                transform: none;
+            }
+        }
     </style>
 </head>
 <body class="gallery-page">
@@ -118,9 +187,8 @@
     <!-- GALLERY GRID -->
     <section class="section">
         <div class="container">
-            <div class="gallery-grid-full" id="gallery-grid-full">
-                <!-- Images will be injected by JavaScript -->
-            </div>
+            <div class="gallery-filters" id="gallery-filters" role="tablist" aria-label="Gallery category filter"></div>
+            <div class="gallery-grid-full" id="gallery-grid-full"></div>
         </div>
     </section>
 
@@ -195,59 +263,187 @@
     <script src="js/main.js"></script>
 
     <script>
-        const galleryImages = [
-            'assets/gallery/p1.jpg',
-            'assets/gallery/p2.jpg',
-            'assets/gallery/p3.jpg',
-            'assets/gallery/p4.jpg',
-            'assets/gallery/p5.jpg',
-            'assets/gallery/p6.jpg'
-        ];
+        (function () {
+            'use strict';
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const container = document.getElementById('gallery-grid-full');
-            if (!container) return;
+            const galleryCategories = {
+                "All": [
+                    'assets/gallery/Techforge/p26.jpeg',
+                    'assets/gallery/Techforge/p27.jpeg',
+                    'assets/gallery/Techforge/p28.jpeg',
+                    'assets/gallery/Techforge/p29.jpeg',
+                    'assets/gallery/Iot Workshop/p1.jpg',
+                    'assets/gallery/Iot Workshop/p3.jpg',
+                    'assets/gallery/Iot Workshop/p4.jpg',
+                    'assets/gallery/Iot Workshop/p6.jpg',
+                    'assets/gallery/Iot Workshop/p16.jpeg',
+                    'assets/gallery/Iot Workshop/p17.jpeg',
+                    'assets/gallery/Iot Workshop/p18.jpeg',
+                    'assets/gallery/Iot Workshop/p19.jpeg',
+                    'assets/gallery/Iot Workshop/p20.jpeg',
+                    'assets/gallery/Iot Workshop/p21.jpeg',
+                    'assets/gallery/Iot Workshop/p22.jpeg',
+                    'assets/gallery/Latex/p23.jpeg',
+                    'assets/gallery/Latex/p24.jpeg',
+                    'assets/gallery/Latex/p25.jpeg',
+                    'assets/gallery/Womens Day/p2.jpg',
+                    'assets/gallery/Womens Day/p5.jpg',
+                    'assets/gallery/Womens Day/p30.jpeg',
+                    'assets/gallery/Womens Day/p31.jpeg',
+                    'assets/gallery/Womens Day/p32.jpeg',
+                    'assets/gallery/Womens Day/p33.jpeg',
+                    'assets/gallery/Womens Day/p34.jpeg',
+                    'assets/gallery/Heart Day/p10.jpeg',
+                    'assets/gallery/Heart Day/p11.jpeg',
+                    'assets/gallery/Heart Day/p12.jpeg',
+                    'assets/gallery/Heart Day/p13.jpeg',
+                    'assets/gallery/Heart Day/p14.jpeg',
+                    'assets/gallery/Heart Day/p15.jpeg',
+                    'assets/gallery/Faculty Spotlights/p7.jpeg',
+                    'assets/gallery/Faculty Spotlights/p8.jpeg',
+                    'assets/gallery/Faculty Spotlights/p9.jpeg'
+                ],
+                "Techforge": [
+                    'assets/gallery/Techforge/p26.jpeg',
+                    'assets/gallery/Techforge/p27.jpeg',
+                    'assets/gallery/Techforge/p28.jpeg',
+                    'assets/gallery/Techforge/p29.jpeg'
+                ],
+                "Iot Workshop": [
+                    'assets/gallery/Iot Workshop/p1.jpg',
+                    'assets/gallery/Iot Workshop/p3.jpg',
+                    'assets/gallery/Iot Workshop/p4.jpg',
+                    'assets/gallery/Iot Workshop/p6.jpg',
+                    'assets/gallery/Iot Workshop/p16.jpeg',
+                    'assets/gallery/Iot Workshop/p17.jpeg',
+                    'assets/gallery/Iot Workshop/p18.jpeg',
+                    'assets/gallery/Iot Workshop/p19.jpeg',
+                    'assets/gallery/Iot Workshop/p20.jpeg',
+                    'assets/gallery/Iot Workshop/p21.jpeg',
+                    'assets/gallery/Iot Workshop/p22.jpeg'
+                ],
+                "Latex": [
+                    'assets/gallery/Latex/p23.jpeg',
+                    'assets/gallery/Latex/p24.jpeg',
+                    'assets/gallery/Latex/p25.jpeg'
+                ],
+                "Womens Day": [
+                    'assets/gallery/Womens Day/p2.jpg',
+                    'assets/gallery/Womens Day/p5.jpg',
+                    'assets/gallery/Womens Day/p30.jpeg',
+                    'assets/gallery/Womens Day/p31.jpeg',
+                    'assets/gallery/Womens Day/p32.jpeg',
+                    'assets/gallery/Womens Day/p33.jpeg',
+                    'assets/gallery/Womens Day/p34.jpeg'
+                ],
+                "Heart Day": [
+                    'assets/gallery/Heart Day/p10.jpeg',
+                    'assets/gallery/Heart Day/p11.jpeg',
+                    'assets/gallery/Heart Day/p12.jpeg',
+                    'assets/gallery/Heart Day/p13.jpeg',
+                    'assets/gallery/Heart Day/p14.jpeg',
+                    'assets/gallery/Heart Day/p15.jpeg'
+                ],
+                "Faculty Spotlights": [
+                    'assets/gallery/Faculty Spotlights/p7.jpeg',
+                    'assets/gallery/Faculty Spotlights/p8.jpeg',
+                    'assets/gallery/Faculty Spotlights/p9.jpeg'
+                ]
+            };
 
-            galleryImages.forEach((src, index) => {
-                const item = document.createElement('div');
-                item.classList.add('gallery-item');
-                const img = document.createElement('img');
-                img.src = src;
-                img.alt = 'Gallery Image ' + (index + 1);
-                img.loading = 'lazy';
-                item.appendChild(img);
+            const filterOrder = [
+                "All",
+                "Techforge",
+                "Iot Workshop",
+                "Latex",
+                "Womens Day",
+                "Heart Day",
+                "Faculty Spotlights"
+            ];
 
-                item.addEventListener('click', function() {
-                    const lightbox = document.getElementById('lightbox');
-                    const lightboxImg = document.getElementById('lightbox-image');
-                    const lightboxCaption = document.getElementById('lightbox-caption');
-                    lightboxImg.src = src;
-                    lightboxCaption.textContent = 'Gallery Image ' + (index + 1);
-                    lightbox.classList.add('active');
-                });
-
-                container.appendChild(item);
-            });
-
+            const filtersContainer = document.getElementById('gallery-filters');
+            const gridContainer = document.getElementById('gallery-grid-full');
             const lightbox = document.getElementById('lightbox');
-            const closeBtn = document.querySelector('.lightbox-close');
-            if (closeBtn && lightbox) {
-                closeBtn.addEventListener('click', function() {
+            const lightboxImg = document.getElementById('lightbox-image');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const lightboxClose = document.querySelector('.lightbox-close');
+
+            if (!filtersContainer || !gridContainer) return;
+
+            function fileName(path) {
+                return path.split('/').pop();
+            }
+
+            function renderGallery(category) {
+                const images = galleryCategories[category] || [];
+                gridContainer.innerHTML = '';
+
+                images.forEach(function (src) {
+                    const item = document.createElement('div');
+                    item.classList.add('gallery-item');
+
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = fileName(src);
+                    img.loading = 'lazy';
+                    item.appendChild(img);
+
+                    item.addEventListener('click', function () {
+                        if (!lightbox || !lightboxImg || !lightboxCaption) return;
+                        lightboxImg.src = src;
+                        lightboxCaption.textContent = fileName(src);
+                        lightbox.classList.add('active');
+                    });
+
+                    gridContainer.appendChild(item);
+                });
+            }
+
+            function buildFilters() {
+                filterOrder.forEach(function (category, index) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'gallery-filter-btn' + (index === 0 ? ' active' : '');
+                    btn.textContent = category;
+                    btn.setAttribute('role', 'tab');
+                    btn.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+                    btn.dataset.category = category;
+
+                    btn.addEventListener('click', function () {
+                        filtersContainer.querySelectorAll('.gallery-filter-btn').forEach(function (b) {
+                            b.classList.remove('active');
+                            b.setAttribute('aria-selected', 'false');
+                        });
+                        btn.classList.add('active');
+                        btn.setAttribute('aria-selected', 'true');
+                        renderGallery(category);
+                    });
+
+                    filtersContainer.appendChild(btn);
+                });
+            }
+
+            if (lightboxClose && lightbox) {
+                lightboxClose.addEventListener('click', function () {
                     lightbox.classList.remove('active');
                 });
-                lightbox.addEventListener('click', function(e) {
+                lightbox.addEventListener('click', function (e) {
                     if (e.target === lightbox) {
                         lightbox.classList.remove('active');
                     }
                 });
             }
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
                     lightbox.classList.remove('active');
                 }
             });
-        });
+
+            buildFilters();
+            renderGallery('All');
+        })();
     </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const container = document.getElementById('gallery-tech-lines');
