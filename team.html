@@ -377,9 +377,18 @@
             <div class="team-filters" role="tablist" aria-label="Team filter">
                 <button type="button"
                         class="team-filter-btn active"
-                        data-target="senior"
+                        data-target="faculties"
                         role="tab"
                         aria-selected="true"
+                        aria-controls="team-faculties"
+                        id="filter-faculties">
+                    Faculties
+                </button>
+                <button type="button"
+                        class="team-filter-btn"
+                        data-target="senior"
+                        role="tab"
+                        aria-selected="false"
                         aria-controls="team-senior"
                         id="filter-senior">
                     Senior Core
@@ -393,21 +402,46 @@
                         id="filter-junior">
                     Junior Core
                 </button>
-                <button type="button"
-                        class="team-filter-btn"
-                        data-target="faculties"
-                        role="tab"
-                        aria-selected="false"
-                        aria-controls="team-faculties"
-                        id="filter-faculties">
-                    Faculties
-                </button>
+            </div>
+
+            <!-- ============================================================
+                 FACULTIES
+                 ============================================================ -->
+            <div class="team-block reveal-up" id="team-faculties" data-team="faculties" role="tabpanel" aria-labelledby="filter-faculties">
+                <header class="team-block-header">
+                    <h2 class="team-block-title">
+                        Faculties
+                    </h2>
+                    <p class="team-block-subtitle">Branch Advisors</p>
+                </header>
+
+                <div class="team-grid">
+
+                    <div class="team-member">
+                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
+                        <h3 class="team-name">Dr Sanjay Deshmukh</h3>
+                        <p class="team-role">Branch Counsellor</p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
+                        <h3 class="team-name">Dr Poonam Sonar</h3>
+                        <p class="team-role">Branch Convener</p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
+                        <h3 class="team-name">Dr Keshav Choughule</h3>
+                        <p class="team-role">Branch Coordinator</p>
+                    </div>
+
+                </div>
             </div>
 
             <!-- ============================================================
                  SENIOR CORE — A.Y. 2026-27 (BE Students)
                  ============================================================ -->
-            <div class="team-block reveal-up" id="team-senior" data-team="senior" role="tabpanel" aria-labelledby="filter-senior">
+            <div class="team-block is-hidden" id="team-senior" data-team="senior" role="tabpanel" aria-labelledby="filter-senior" hidden>
                 <header class="team-block-header">
                     <h2 class="team-block-title">
                         Senior Core <span class="team-block-year">— A.Y. 2026-27</span>
@@ -628,40 +662,6 @@
                 </div>
             </div>
 
-            <!-- ============================================================
-                 FACULTIES
-                 ============================================================ -->
-            <div class="team-block is-hidden" id="team-faculties" data-team="faculties" role="tabpanel" aria-labelledby="filter-faculties" hidden>
-                <header class="team-block-header">
-                    <h2 class="team-block-title">
-                        Faculties
-                    </h2>
-                    <p class="team-block-subtitle">Branch Advisors</p>
-                </header>
-
-                <div class="team-grid">
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Dr Sanjay Deshmukh</h3>
-                        <p class="team-role">Branch Counsellor</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Dr Poonam Sonar</h3>
-                        <p class="team-role">Branch Convener</p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Dr Keshav Choughule</h3>
-                        <p class="team-role">Branch Coordinator</p>
-                    </div>
-
-                </div>
-            </div>
-
         </div>
     </section>
 
@@ -767,7 +767,7 @@
                 });
             });
 
-            activate('senior');
+            activate('faculties');
         })();
     </script>
 
