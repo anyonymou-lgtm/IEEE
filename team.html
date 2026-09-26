@@ -17,13 +17,6 @@
     <script src="js/theme.js"></script>
 
     <style>
-        /* ============================================================
-           TEAM PAGE — SCOPED STYLES
-           Senior Core + Junior Core, circular photo directory,
-           with a two-button filter at the top.
-           ============================================================ */
-
-        /* ---------- Page header (kept from original) ---------- */
         .team-header {
             padding: 120px 0 40px 0;
             text-align: center;
@@ -40,19 +33,17 @@
             margin: 0 auto;
         }
 
-        /* ---------- Section wrapper ---------- */
         .team-section {
             padding: 60px 0 80px 0;
         }
 
-        /* ---------- Filter buttons ---------- */
         .team-filters {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 0.75rem;
             margin: 0 auto 3rem auto;
-            max-width: 480px;
+            max-width: 640px;
         }
 
         .team-filter-btn {
@@ -104,7 +95,6 @@
             transform: translateY(1px);
         }
 
-        /* ---------- Team block (each filter's section) ---------- */
         .team-block.is-hidden {
             display: none;
         }
@@ -118,7 +108,6 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ---------- Section header ---------- */
         .team-block-header {
             text-align: center;
             margin-bottom: 3rem;
@@ -148,7 +137,6 @@
             margin: 0;
         }
 
-        /* ---------- Grid ---------- */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -157,7 +145,6 @@
             max-width: 1100px;
         }
 
-        /* ---------- Individual member ---------- */
         .team-member {
             display: flex;
             flex-direction: column;
@@ -166,7 +153,6 @@
             gap: 0.85rem;
         }
 
-        /* ---------- Circular photo placeholder ---------- */
         .team-photo {
             width: 130px;
             height: 130px;
@@ -208,7 +194,6 @@
             display: none;
         }
 
-        /* ---------- Name + role ---------- */
         .team-name {
             font-size: 1rem;
             font-weight: 700;
@@ -227,7 +212,6 @@
             max-width: 200px;
         }
 
-        /* ---------- Responsive ---------- */
         @media (max-width: 1024px) {
             .team-grid {
                 grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
@@ -409,6 +393,15 @@
                         id="filter-junior">
                     Junior Core
                 </button>
+                <button type="button"
+                        class="team-filter-btn"
+                        data-target="faculties"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="team-faculties"
+                        id="filter-faculties">
+                    Faculties
+                </button>
             </div>
 
             <!-- ============================================================
@@ -519,7 +512,6 @@
 
             <!-- ============================================================
                  JUNIOR CORE — A.Y. 2026-27 (TE Students)
-                 Hidden by default; shown when the Junior filter is active.
                  ============================================================ -->
             <div class="team-block is-hidden" id="team-junior" data-team="junior" role="tabpanel" aria-labelledby="filter-junior" hidden>
                 <header class="team-block-header">
@@ -539,7 +531,7 @@
 
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Navya Shethia</h3>
+                        <h3 class="team-name">Navya Sethia</h3>
                         <p class="team-role">Asst. General Secretary<br>Asst. Social Media Manager</p>
                     </div>
 
@@ -587,7 +579,7 @@
 
                     <div class="team-member">
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
-                        <h3 class="team-name">Ketki Chavan</h3>
+                        <h3 class="team-name">Ketaki Chavan</h3>
                         <p class="team-role">Asst. Digital Creative Secretary</p>
                     </div>
 
@@ -631,6 +623,40 @@
                         <div class="team-photo"><img src="" alt="" loading="lazy"></div>
                         <h3 class="team-name">Gargi Chapade</h3>
                         <p class="team-role">Asst. Reports &amp; Editorial Secretary</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ============================================================
+                 FACULTIES
+                 ============================================================ -->
+            <div class="team-block is-hidden" id="team-faculties" data-team="faculties" role="tabpanel" aria-labelledby="filter-faculties" hidden>
+                <header class="team-block-header">
+                    <h2 class="team-block-title">
+                        Faculties
+                    </h2>
+                    <p class="team-block-subtitle">Branch Advisors</p>
+                </header>
+
+                <div class="team-grid">
+
+                    <div class="team-member">
+                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
+                        <h3 class="team-name">Dr Sanjay Deshmukh</h3>
+                        <p class="team-role">Branch Counsellor</p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
+                        <h3 class="team-name">Dr Poonam Sonar</h3>
+                        <p class="team-role">Branch Convener</p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="team-photo"><img src="" alt="" loading="lazy"></div>
+                        <h3 class="team-name">Dr Keshav Choughule</h3>
+                        <p class="team-role">Branch Coordinator</p>
                     </div>
 
                 </div>
@@ -701,10 +727,6 @@
     <script src="js/main.js"></script>
 
     <script>
-        /* ============================================================
-           TEAM FILTER — Senior Core / Junior Core
-           Pure client-side toggle. No page reload.
-           ============================================================ */
         (function () {
             'use strict';
 
