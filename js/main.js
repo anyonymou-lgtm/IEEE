@@ -29,12 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (galleryGrid) {
         const imagePaths = [
-            'assets/gallery/Iot Workshop/p1.jpg',
-            'assets/gallery/Womens Day/p2.jpg',
-            'assets/gallery/Iot Workshop/p3.jpg',
-            'assets/gallery/Iot Workshop/p4.jpg',
-            'assets/gallery/Womens Day/p5.jpg',
-            'assets/gallery/Iot Workshop/p6.jpg'
+            'assets/gallery/Iot Workshop/p1.avif',
+            'assets/gallery/Womens Day/p2.avif',
+            'assets/gallery/Iot Workshop/p3.avif',
+            'assets/gallery/Iot Workshop/p4.avif',
+            'assets/gallery/Womens Day/p5.avif',
+            'assets/gallery/Iot Workshop/p6.avif'
         ];
 
         imagePaths.forEach((src, index) => {
