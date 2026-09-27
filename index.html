@@ -15,14 +15,141 @@
     <link rel="stylesheet" href="css/responsive.css">
 
     <script src="js/theme.js"></script>
+
+    <style>
+        .home-page .lightbox {
+            background: #05070d;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            padding: 4vh 4vw;
+            overflow: hidden;
+        }
+
+        .home-page .lightbox-backdrop {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .home-page .lightbox-backdrop-layer {
+            position: absolute;
+            inset: -60px;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            filter: blur(48px) brightness(0.48) saturate(1.15);
+            transform: scale(1.18);
+            opacity: 0;
+            transition: opacity 0.42s ease;
+            will-change: opacity;
+        }
+
+        .home-page .lightbox-backdrop-layer.active {
+            opacity: 1;
+        }
+
+        .home-page .lightbox-content {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+            padding: 0;
+            border: none;
+            border-radius: 0;
+            max-width: none;
+            width: auto;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-height: 100%;
+            touch-action: pan-y;
+        }
+
+        .home-page .lightbox-content img {
+            max-width: 88vw;
+            max-height: 76vh;
+            max-height: 76dvh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow:
+                0 24px 70px rgba(0, 0, 0, 0.65),
+                0 0 0 1px rgba(255, 255, 255, 0.08);
+            display: block;
+            margin: 0 auto;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .home-page .lightbox-content img.lb-switch {
+            animation: lbSwitch 0.28s ease;
+        }
+        @keyframes lbSwitch {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .home-page .lightbox-content p {
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+            text-align: center;
+            max-width: 88vw;
+            word-break: break-word;
+        }
+
+        .home-page .lightbox-close {
+            z-index: 3;
+            color: #ffffff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+        }
+
+        @media (max-width: 768px) {
+            .home-page .lightbox {
+                padding: 4vh 3vw;
+            }
+            .home-page .lightbox-backdrop-layer {
+                filter: blur(38px) brightness(0.45) saturate(1.1);
+                inset: -40px;
+            }
+            .home-page .lightbox-content img {
+                max-width: 94vw;
+                max-height: 74dvh;
+                border-radius: 8px;
+            }
+            .home-page .lightbox-content p {
+                font-size: 0.85rem;
+                margin-top: 0.75rem;
+                max-width: 94vw;
+            }
+            .home-page .lightbox-close {
+                top: 14px;
+                right: 18px;
+                font-size: 2.4rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .home-page .lightbox-backdrop-layer {
+                transition: none;
+            }
+            .home-page .lightbox-content img.lb-switch {
+                animation: none;
+            }
+        }
+    </style>
 </head>
 <body class="home-page">
 
     <!-- ============================================================
          PRELOADER
-         ------------------------------------------------------------
-         ONLY visual content: assets/Logo.mp4
-         No SVG, no text, no dots, no orbits, no fallback logo.
          ============================================================ -->
     <div id="preloader" class="preloader-overlay" role="status" aria-label="Loading">
         <video class="preloader-video"
@@ -277,10 +404,14 @@
 
     <!-- LIGHTBOX -->
     <div id="lightbox" class="lightbox">
+        <div class="lightbox-backdrop" aria-hidden="true">
+            <div class="lightbox-backdrop-layer" id="lightbox-backdrop-a"></div>
+            <div class="lightbox-backdrop-layer" id="lightbox-backdrop-b"></div>
+        </div>
         <span class="lightbox-close">&times;</span>
         <div class="lightbox-content">
-            <img id="lightbox-image" src="" alt="Gallery Image" style="max-width: 100%; max-height: 70vh; border-radius: 8px;">
-            <p id="lightbox-caption" style="margin-top: 1rem;"></p>
+            <img id="lightbox-image" src="" alt="Gallery Image">
+            <p id="lightbox-caption"></p>
         </div>
     </div>
 
